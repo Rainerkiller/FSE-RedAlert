@@ -9,45 +9,45 @@ import java.util.HashSet;
 class Buildings {
     private float health;
     private String name;
-    private int Power;
-    private int UsedPower;
-    private String Type = "BUILDING";
-    private String Country;
-    private Sprite Image;
-    private Weapon Weapon;
-    private HashSet<String> UnlockBuildings;
+    private int power;
+    private int usedPower;
+    private String type = "BUILDING";
+    private String country;
+    private Sprite image;
+    private Weapon weapon;
+    private HashSet<String> unlockBuildings;
 
     //-----------------Return Type-----------------------
 
-    public float GetHp(){
+    public float getHp(){
         return health;
     }
-    public String GetName(){
+    public String getName(){
         return name;
     }
-    public String GetCountry(){
-        return Country;
+    public String getCountry(){
+        return country;
     }
-    public String GetType(){
-        return Type;
+    public String getType(){
+        return type;
     }
     //-----------------Void Type--------------------------
 
-    public void ShowBuilds(SpriteBatch batch){
-        Image.draw(batch);
+    public void showBuilds(SpriteBatch batch){
+        image.draw(batch);
     }
-    public void TakeDamage(Weapon CurrentWeapon){
+    public void takeDamage(Weapon CurrentWeapon){
         health = health-CurrentWeapon.GetDamage();
     }
-    public Buildings(float HealthP,String name,int powerprovide,int powerused,String country, Sprite img,Weapon weapon, HashSet<String>Reb){
+    public Buildings(float HealthP,String name,int powerProvide,int powerused,String Country, Sprite img,Weapon Weapon, HashSet<String>Reb){
         health=HealthP;
-        Country = country;
-        Power = powerprovide;
-        UsedPower = powerused;
-        Image = img;
-        Weapon = weapon;
+        country = Country;
+        power = powerProvide;
+        usedPower = powerused;
+        image = img;
+        weapon = weapon;
         this.name=name;
-        UnlockBuildings = Reb;
+        unlockBuildings = Reb;
     }
 
 }
