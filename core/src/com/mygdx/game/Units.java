@@ -9,61 +9,53 @@ import java.util.Set;
 
 class Units {
     private int health;
-    private String armor;
-    private Sprite staticPicture;
-    private Sprite currentAction;
-    private Sprite [] movingActions;
-    private String weapon;
-
+    private String Armor;
+    private Sprite StaticPicture;
+    private Sprite CurrentAction;
+    private Sprite [] MovingActions;
+    private String Weapon;
     public Units(){
         health = 0;
-        armor =null;
-        staticPicture = null;
-        weapon = null;
+        Armor =null;
+        StaticPicture = null;
+        Weapon = null;
     }
-
-    public Units(int hp,String arm,Sprite staticMotion ,String Weapon){
+    public Units(int hp,String Arm,Sprite StaticMotion ,String weapon){
         health = hp;
-        armor =arm;
-        staticPicture = staticMotion;
-        weapon = Weapon;
+        Armor =Arm;
+        StaticPicture = StaticMotion;
+        Weapon = weapon;
     }
-
-    public void loadUnits(int hp,String Arm,Sprite StaticMotion ,String Weapon){
+    public void LoadUnits(int hp,String Arm,Sprite StaticMotion ,String weapon){
         health = hp;
-        armor = Arm;
-        staticPicture = StaticMotion;
-        weapon = Weapon;
+        Armor =Arm;
+        StaticPicture = StaticMotion;
+        Weapon = weapon;
     }
-
-    public int getHealth(){
+    public int GetHealth(){
         return health;
     }
-
-    public Sprite showMotion(){
-        return currentAction;
+    public Sprite ShowMotion(){
+        return CurrentAction;
     }
-
-    public void showUnit(SpriteBatch batch){
-        staticPicture.draw(batch);
+    public void ShowUnit(SpriteBatch batch){
+        StaticPicture.draw(batch);
     }
-
-    public void setPosition(float x,float y){
-        staticPicture.setPosition(x,y);
+    public void SetPostition(float x,float y){
+        StaticPicture.setPosition(x,y);
     }
-
-    public void moveTo(float x,float y,SpriteBatch batch) {
-        float CurrentX = staticPicture.getX();
-        float CurrentY = staticPicture.getY();
-        while (CurrentX < x && CurrentY < y) {
-            if (CurrentX < x) {
-                CurrentX += 0.5;
+    public void MoveTo(float x,float y,SpriteBatch batch){
+        float CurrentX = StaticPicture.getX();
+        float CurrentY = StaticPicture.getY();
+        while(CurrentX<x&&CurrentY<y){
+            if(CurrentX<x){
+                CurrentX+=0.5;
             }
-            if (CurrentY < y) {
-                CurrentY += 0.5;
+            if(CurrentY<y){
+                CurrentY+=0.5;
             }
-            setPosition(CurrentX, CurrentY);
-            showUnit(batch);
+            SetPostition(CurrentX,CurrentY);
+            ShowUnit(batch);
         }
     }
 }
