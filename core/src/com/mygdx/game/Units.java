@@ -47,7 +47,7 @@ class Units {
     public void showUnit(SpriteBatch background){
         staticPicture.draw(background);
     }
-    public void setPostition(float x,float y){
+    public void setPosition(float x,float y){
         staticPicture.setPosition(x,y);
     }
     public void MoveTo(float x,float y,SpriteBatch background){
@@ -60,7 +60,7 @@ class Units {
             if(CurrentY < y){
                 CurrentY += 0.5;
             }
-            setPostition(CurrentX, CurrentY);
+            setPosition(CurrentX, CurrentY);
             showUnit(background);
         }
     }

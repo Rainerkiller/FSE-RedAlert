@@ -20,7 +20,7 @@ class Weapon {
         TypeResistance[1] = MedArmor;
         TypeResistance[2] = HeavyArmor;
         TypeResistance[3] = Building;
-        this.Damage=Damage;
+        this.Damage = Damage;
 
     }
     //-----------------Return Type-----------------------

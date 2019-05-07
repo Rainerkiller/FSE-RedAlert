@@ -40,13 +40,13 @@ class Buildings {
         health = health-CurrentWeapon.GetDamage();
     }
     public Buildings(float HealthP,String name,int powerProvide,int powerused,String Country, Sprite img,Weapon Weapon, HashSet<String>Reb){
-        health=HealthP;
+        health= HealthP;
         country = Country;
         power = powerProvide;
         usedPower = powerused;
         image = img;
         weapon = weapon;
-        this.name=name;
+        this.name = name;
         unlockBuildings = Reb;
     }
 
