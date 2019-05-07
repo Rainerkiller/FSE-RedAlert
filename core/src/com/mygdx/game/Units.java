@@ -5,63 +5,63 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 class Units {
     private int health;
-    private String Name;
-    private String Type;
-    private Sprite StaticPicture;
-    private Sprite CurrentAction;
-    private Sprite [] MovingActions;
-    private String Weapon;
+    private String name;
+    private String type;
+    private Sprite staticPicture;
+    private Sprite currentAction;
+    private Sprite [] movingActions;
+    private String weapon;
 
     //--------------------Set up----------------------
 
     public Units(){
         health = 0;
-        Type =null;
-        StaticPicture = null;
-        Weapon = null;
+        type = null;
+        staticPicture = null;
+        weapon = null;
     }
-    public Units(int hp,String Arm,Sprite StaticMotion ,String weapon){
+    public Units(int hp,String Arm,Sprite StaticMotion ,String Weapon){
         health = hp;
-        Type =Arm;
-        StaticPicture = StaticMotion;
-        Weapon = weapon;
+        type = Arm;
+        staticPicture = StaticMotion;
+        weapon = Weapon;
     }
 
     //-----------------Return Type-----------------------
 
-    public int GetHealth(){
+    public int getHealth(){
         return health;
     }
-    public Sprite ShowMotion(){
-        return CurrentAction;
+    public Sprite showMotion(){
+        return currentAction;
     }
 
     //-----------------Return Type-----------------------
 
-    public void LoadUnits(int hp,String Arm,Sprite StaticMotion ,String weapon){
+    public void loadUnits(int hp,String Arm,Sprite StaticMotion ,String Weapon){
         health = hp;
-        Type =Arm;
-        StaticPicture = StaticMotion;
-        Weapon = weapon;
+        type = Arm;
+        staticPicture = StaticMotion;
+        weapon = Weapon;
     }
-    public void ShowUnit(SpriteBatch batch){
-        StaticPicture.draw(batch);
+    public void showUnit(SpriteBatch background){
+        staticPicture.draw(background);
     }
-    public void SetPostition(float x,float y){
-        StaticPicture.setPosition(x,y);
+    public void setPostition(float x,float y){
+        staticPicture.setPosition(x,y);
     }
-    public void MoveTo(float x,float y,SpriteBatch batch){
-        float CurrentX = StaticPicture.getX();
-        float CurrentY = StaticPicture.getY();
-        while(CurrentX<x&&CurrentY<y){
-            if(CurrentX<x){
-                CurrentX+=0.5;
+    public void MoveTo(float x,float y,SpriteBatch background){
+        float CurrentX = staticPicture.getX();
+        float CurrentY = staticPicture.getY();
+        while(CurrentX < x && CurrentY < y){
+            if(CurrentX < x){
+                CurrentX += 0.5;
             }
-            if(CurrentY<y){
-                CurrentY+=0.5;
+            if(CurrentY < y){
+                CurrentY += 0.5;
             }
-            SetPostition(CurrentX,CurrentY);
-            ShowUnit(batch);
+            setPostition(CurrentX, CurrentY);
+            showUnit(background);
         }
     }
 
