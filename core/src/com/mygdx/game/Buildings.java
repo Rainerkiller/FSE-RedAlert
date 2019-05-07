@@ -33,11 +33,11 @@ class Buildings {
     }
     //-----------------Void Type--------------------------
 
-    public void showBuilds(SpriteBatch batch){
-        image.draw(batch);
+    public void showBuilds(SpriteBatch background){
+        image.draw(background);
     }
     public void takeDamage(Weapon CurrentWeapon){
-        health = health-CurrentWeapon.GetDamage();
+        health = health - CurrentWeapon.GetDamage();
     }
     public Buildings(float HealthP,String name,int powerProvide,int powerused,String Country, Sprite img,Weapon Weapon, HashSet<String>Reb){
         health= HealthP;
