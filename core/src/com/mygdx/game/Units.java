@@ -11,6 +11,9 @@ class Units {
     private Sprite CurrentAction;
     private Sprite [] MovingActions;
     private String Weapon;
+
+    //--------------------Set up----------------------
+
     public Units(){
         health = 0;
         Type =null;
@@ -23,17 +26,23 @@ class Units {
         StaticPicture = StaticMotion;
         Weapon = weapon;
     }
-    public void LoadUnits(int hp,String Arm,Sprite StaticMotion ,String weapon){
-        health = hp;
-        Type =Arm;
-        StaticPicture = StaticMotion;
-        Weapon = weapon;
-    }
+
+    //-----------------Return Type-----------------------
+
     public int GetHealth(){
         return health;
     }
     public Sprite ShowMotion(){
         return CurrentAction;
+    }
+
+    //-----------------Return Type-----------------------
+
+    public void LoadUnits(int hp,String Arm,Sprite StaticMotion ,String weapon){
+        health = hp;
+        Type =Arm;
+        StaticPicture = StaticMotion;
+        Weapon = weapon;
     }
     public void ShowUnit(SpriteBatch batch){
         StaticPicture.draw(batch);
