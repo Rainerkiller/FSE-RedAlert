@@ -18,7 +18,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		img = new Texture("badlogic.jpg");
 		System.out.println("1");
 		Sprite Test = new Sprite(img);
-		BadTest.LoadUnits(50,"LIGHT",Test,"NOWEAPON");
+		BadTest.loadUnits(50,"LIGHT",Test,"NOWEAPON");
 	}
 
 	@Override
@@ -27,8 +27,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		BadTest.SetPostition(20, 20);
-		BadTest.ShowUnit(batch);
+		BadTest.setPosition(20, 20);
+		BadTest.showUnit(batch);
 		BadTest.MoveTo(50,50,batch);
 		batch.end();
 	}
