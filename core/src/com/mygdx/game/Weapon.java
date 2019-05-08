@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 class Weapon {
     private String Name;
-    private float[]TypeResistance = {1,1,1,1};
+    private float[]TypeResistance = {1, 1, 1, 1};
     private int Damage;
 
     //-----------------Set Up-----------------------
@@ -21,16 +21,18 @@ class Weapon {
         TypeResistance[2] = HeavyArmor;
         TypeResistance[3] = Building;
         this.Damage = Damage;
-
     }
+
     //-----------------Return Type-----------------------
 
     public int GetDamage(){
         return Damage;
     }
+
     public String GetName(){
         return Name;
     }
+
     public float[] GetTypeRsistance(){
         return TypeResistance;
     }

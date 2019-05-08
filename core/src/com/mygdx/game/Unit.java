@@ -46,13 +46,16 @@ class Unit {
         staticPicture = StaticMotion;
         weapon = Weapon;
     }
+
     public void showUnit(SpriteBatch background){
         staticPicture.draw(background);
     }
+
     public void setPosition(float x,float y){
         staticPicture.setPosition(x,y);
     }
-    public void MoveTo(float x,float y,SpriteBatch background){
+
+    public void moveTo(float x,float y,SpriteBatch background){
         float CurrentX = staticPicture.getX();
         float CurrentY = staticPicture.getY();
         while(CurrentX < x && CurrentY < y){
