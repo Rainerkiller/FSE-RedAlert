@@ -43,13 +43,13 @@ class Toolbox {
     }
 
 
-    public void waitTime(int ms){
+    public void wait(int ms){
         try{
             Thread.sleep(ms);
         }
         catch (InterruptedException ie){
             Thread.currentThread().interrupt();
-            System.out.println("waitTime() failed");
+            System.out.println("Error: wait() -> Toolbox.java");
         }
     }
 }
