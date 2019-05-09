@@ -27,9 +27,6 @@ class Unit {
         weapon = Weapon;
     }
 
-
-
-
     //-----------------Return Type-----------------------
 
     public int getHealth(){
