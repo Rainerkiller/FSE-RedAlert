@@ -6,25 +6,31 @@ import com.badlogic.gdx.Input;
 class Toolbox {
     private boolean mouseLeftClicked, mouseRightClicked;
 
-    public int getMouseX() {
+
+    public float getMouseX() {
         return Gdx.input.getX();
     }
 
-    public int getMouseY() {
+    //get mouse Y position
+    public float getMouseY() {
         return Gdx.input.getY();
     }
 
+    // detect if the mouse left button is clicked
     public boolean mouseLeftClick(){
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             mouseLeftClicked = true;
             return false;
         }
+
         if(mouseLeftClicked){
             mouseLeftClicked = false;
             return true;
         }
+
         return false;
     }
+
 
     public boolean mouseRightClick(){
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
@@ -38,6 +44,7 @@ class Toolbox {
         return false;
     }
 
+    //random number generator
     public int randomNumber (int number){
         return (int)(Math.random()*number);
     }
