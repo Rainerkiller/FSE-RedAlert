@@ -6,7 +6,7 @@ import com.badlogic.gdx.Input;
 class Toolbox {
     private boolean mouseLeftClicked, mouseRightClicked;
 
-
+    //get mouse X position
     public float getMouseX() {
         return Gdx.input.getX();
     }
@@ -31,7 +31,7 @@ class Toolbox {
         return false;
     }
 
-
+    //detect if the mouse right button is clicked
     public boolean mouseRightClick(){
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             mouseRightClicked = true;
