@@ -37,15 +37,15 @@ class Buildings {
         image.draw(background);
     }
     public void takeDamage(Weapon CurrentWeapon){
-        health = health - CurrentWeapon.GetDamage();
+        health = health - CurrentWeapon.getDamage();
     }
-    public Buildings(float HealthP,String name,int powerProvide,int powerused,String Country, Sprite img,Weapon Weapon, HashSet<String>Reb){
+    public Buildings(float HealthP,String name,int powerProvide,int powerUsed,String Country, Sprite img,Weapon Weapon, HashSet<String>Reb){
         health= HealthP;
         country = Country;
         power = powerProvide;
-        usedPower = powerused;
+        usedPower = powerUsed;
         image = img;
-        weapon = weapon;
+        weapon = Weapon;
         this.name = name;
         unlockBuildings = Reb;
     }
