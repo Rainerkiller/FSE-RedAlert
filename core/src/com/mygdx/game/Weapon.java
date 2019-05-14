@@ -9,7 +9,8 @@ class Weapon {
     private float[]TypeResistance = {1,1,1,1};
     private int Damage;
 
-    //-----------------Set Up-----------------------
+    //-----------------Set Up------------------------
+
     public Weapon(){
         Name = "NEWWEAPON";
         Damage = 0;
@@ -23,6 +24,7 @@ class Weapon {
         this.Damage = Damage;
 
     }
+
     //-----------------Return Type-----------------------
 
     public int GetDamage(){

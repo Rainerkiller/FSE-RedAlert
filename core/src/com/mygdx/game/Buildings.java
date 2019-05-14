@@ -6,11 +6,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-class Buildings {
+class Building {
     private float health;
     private String name;
     private int power;
     private int usedPower;
+    private int cost;
     private String type = "BUILDING";
     private String country;
     private Sprite image;
@@ -19,28 +20,36 @@ class Buildings {
 
     //-----------------Return Type-----------------------
 
-    public float getHp(){
+    public float getHp() {
         return health;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public String getCountry(){
+
+    public String getCountry() {
         return country;
     }
-    public String getType(){
+
+    public String getType() {
         return type;
+    }
+    public int getCost(){
+        return cost;
     }
     //-----------------Void Type--------------------------
 
-    public void showBuilds(SpriteBatch background){
+    public void showBuilds(SpriteBatch background) {
         image.draw(background);
     }
-    public void takeDamage(Weapon CurrentWeapon){
+
+    public void takeDamage(Weapon CurrentWeapon) {
         health = health - CurrentWeapon.GetDamage();
     }
-    public Buildings(float HealthP,String name,int powerProvide,int powerused,String Country, Sprite img,Weapon Weapon, HashSet<String>Reb){
-        health= HealthP;
+
+    public Building(float HealthP, String name, int powerProvide, int powerused, String Country, Sprite img, Weapon Weapon, HashSet<String> Reb) {
+        health = HealthP;
         country = Country;
         power = powerProvide;
         usedPower = powerused;
@@ -50,4 +59,7 @@ class Buildings {
         unlockBuildings = Reb;
     }
 
+    //
+
 }
+

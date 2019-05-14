@@ -10,13 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
-	Units BadTest = new Units();
+	Unit BadTest = new Unit();
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		System.out.println("1");
 		Sprite Test = new Sprite(img);
 		BadTest.loadUnits(50,"LIGHT",Test,"NOWEAPON");
 	}
@@ -28,7 +27,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		BadTest.setPosition(20, 20);
 		BadTest.showUnit(batch);
-		BadTest.MoveTo(50,50,batch);
+		BadTest.moveTo(50,50,batch);
 		batch.end();
 	}
 
