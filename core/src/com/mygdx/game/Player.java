@@ -8,8 +8,8 @@ class Player {
     private int money;
     private int maxPower;
     private int usedPower;
-    private ArrayList<Buildings> buildings;
-    private ArrayList<Units> units;
+    private ArrayList<Building> buildings;
+    private ArrayList<Unit> units;
     private boolean LOSE = false;
     //-----------------Return Type-----------------------
 

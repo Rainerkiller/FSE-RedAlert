@@ -45,7 +45,7 @@ class Building {
     }
 
     public void takeDamage(Weapon CurrentWeapon) {
-        health = health - CurrentWeapon.GetDamage();
+        health = health - CurrentWeapon.getDamage();
     }
 
     public Building(float HealthP, String name, int powerProvide, int powerused, String Country, Sprite img, Weapon Weapon, HashSet<String> Reb) {
