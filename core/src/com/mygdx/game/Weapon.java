@@ -9,7 +9,8 @@ class Weapon {
     private float[]typeResistance = {1, 1, 1, 1};
     private int damage;
 
-    //-----------------Set Up-----------------------
+    //-----------------Set Up------------------------
+
     public Weapon(){
         name = "NEWWEAPON";
         damage = 0;

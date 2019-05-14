@@ -9,7 +9,7 @@ class Player {
     private int maxPower;
     private int usedPower;
     private ArrayList<Buildings> buildings;
-    private ArrayList<Unit> units;
+    private ArrayList<Units> units;
     private boolean LOSE = false;
     //-----------------Return Type-----------------------
 

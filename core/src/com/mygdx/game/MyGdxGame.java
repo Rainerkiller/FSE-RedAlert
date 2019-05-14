@@ -16,7 +16,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		System.out.println("1");
 		Sprite Test = new Sprite(img);
 		BadTest.loadUnits(50,"LIGHT",Test,"NOWEAPON");
 	}
