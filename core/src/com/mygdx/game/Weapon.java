@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 class Weapon {
     private String name;
-    private float[]typeResistance = {1, 1, 1, 1};
+    private float[]typeResistance = {1, 1, 1, 1};//toLightArmor, toMediumArmor, toHeavyArmor, toBuildings
     private int damage;
 
     //-----------------Set Up------------------------
