@@ -7,7 +7,7 @@ import java.util.ArrayList;
 class Weapon {
     private String name;
     private float[]typeResistance = {1, 1, 1, 1};//toLightArmor, toMediumArmor, toHeavyArmor, toBuildings
-    private int damage;
+    private int damage;//standard weapon damage
 
     //-----------------Set Up------------------------
 
@@ -27,14 +27,14 @@ class Weapon {
     //-----------------Return Type-----------------------
 
     public int getDamage(){
-        return damage;
+        return damage; //return the damage of the weapon
     }
 
     public String getName(){
-        return name;
+        return name; //return the name of the weapon
     }
 
     public float[] getTypeRsistance(){
-        return typeResistance;
+        return typeResistance; //return an array with resistances to different objects
     }
 }
