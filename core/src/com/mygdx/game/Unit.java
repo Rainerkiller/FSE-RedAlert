@@ -28,16 +28,16 @@ class Unit {
         weapon = Weapon;
     }
 
-    //-----------------Return Type-----------------------
+    //-----------------Return Type-----------------------b
 
     public int getHealth(){
         return health;
     }
-    public Sprite showMotion(){
-        return currentAction;
+    public Sprite getSprite(){
+        return staticPicture;
     }
-
-    //-----------------Return Type-----------------------
+    public boolean isAlive(){return  health>0; }
+    //-----------------Void Type-----------------------
 
     public void loadUnits(int hp,String Arm,Sprite StaticMotion ,String Weapon){
         health = hp;
@@ -51,19 +51,8 @@ class Unit {
     public void setPosition(float x,float y){
         staticPicture.setPosition(x,y);
     }
-    public void moveTo(float x,float y,SpriteBatch background){
-        float CurrentX = staticPicture.getX();
-        float CurrentY = staticPicture.getY();
-        while(CurrentX < x && CurrentY < y){
-            if(CurrentX < x){
-                CurrentX += 0.5;
-            }
-            if(CurrentY < y){
-                CurrentY += 0.5;
-            }
-            setPosition(CurrentX, CurrentY);
-            showUnit(background);
-        }
+    public boolean getInScreen(){
+        return (staticPicture.getX()>0&&staticPicture.getX()<1920)&&(staticPicture.getY()>0&&staticPicture.getY()<1080);
     }
 
 }

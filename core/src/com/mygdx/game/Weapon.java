@@ -22,7 +22,6 @@ class Weapon {
         TypeResistance[2] = HeavyArmor;
         TypeResistance[3] = Building;
         this.Damage = Damage;
-
     }
 
     //-----------------Return Type-----------------------
@@ -36,4 +35,5 @@ class Weapon {
     public float[] GetTypeRsistance(){
         return TypeResistance;
     }
+
 }

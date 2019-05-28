@@ -1,14 +1,24 @@
 package com.mygdx.game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+
 class Player {
     private String name;
     private String Country;
     private int money;
     private int maxPower;
     private int usedPower;
-    private ArrayList<Building> buildings;
-    private ArrayList<Unit> units;
+    private ArrayList<Building> buildings = new ArrayList<Building>();
+    private ArrayList<Unit> units = new ArrayList<Unit>();
     private boolean LOSE = false;
+    //-----------------Set Up------------------------
+    public Player(){
+        name = "NULL";
+        money = 9999999;
+    }
+
     //-----------------Return Type-----------------------
 
     public boolean gameOn(){
@@ -52,5 +62,19 @@ class Player {
     public void spendMoney(Building build){
         money = money - build.getCost();
     }
-
+    public void addBuilding( Building e){
+        buildings.add(e);
+    }
+    public void addUnit(Unit a){
+        units.add(a);
+    }
+    public void showBuilding(SpriteBatch batch){
+        for(int i =0;i<buildings.size();i++) {
+            buildings.get(i).draw(batch);
+        }
+    }
+    public void showUnits(SpriteBatch batch){
+        for(int i =0;i<units.size();i++) {
+        }
+    }
 }
