@@ -47,8 +47,8 @@ public class MyGdxGame extends ApplicationAdapter{
 		BadTest.loadUnits(50,"LIGHT",Test,"NOWEAPON");
 
 
-		xPos = Gdx.graphics.getWidth() / 2;
-		yPos = Gdx.graphics.getHeight() / 2;
+		xPos = 0;
+		yPos = 0;
 
 	}
 
@@ -67,9 +67,9 @@ public class MyGdxGame extends ApplicationAdapter{
 				img4.get(i).setPosition(img4.get(i).getSprite().getX()-5,img4.get(i).getSprite().getX()+5);
 			}
 			BadTest.setPosition(BadTest.getSprite().getX() -5, BadTest.getSprite().getY() +5 );
-		}else if(xPos<100&&yPos<100){
-			for(int i = 0;i<img4.size();i++){
-				img4.get(i).setPosition(img4.get(i).getSprite().getX()+5,img4.get(i).getSprite().getX()-5);
+		}else if(xPos < 100 && yPos < 100){
+			for(int i = 0;i < img4.size(); i++){
+				img4.get(i).setPosition(img4.get(i).getSprite().getX() + 5,img4.get(i).getSprite().getX() - 5);
 			}
 			BadTest.setPosition(BadTest.getSprite().getX() +5, BadTest.getSprite().getY() -5);
 		}else if(xPos<100&&yPos>800){
