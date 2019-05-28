@@ -8,6 +8,6 @@ import com.mygdx.game.TestClass;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new TestClass(), config);
+		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

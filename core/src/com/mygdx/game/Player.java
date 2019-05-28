@@ -1,6 +1,8 @@
 package com.mygdx.game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,7 +18,7 @@ class Player {
     //-----------------Set Up------------------------
     public Player(){
         name = "NULL";
-        money = 9999999;
+        money = 0;
     }
 
     //-----------------Return Type-----------------------
@@ -63,6 +65,7 @@ class Player {
         money = money - build.getCost();
     }
     public void addBuilding( Building e){
+        money = money - e.getCost();
         buildings.add(e);
     }
     public void addUnit(Unit a){
@@ -71,6 +74,13 @@ class Player {
     public void showBuilding(SpriteBatch batch){
         for(int i =0;i<buildings.size();i++) {
             buildings.get(i).draw(batch);
+        }
+    }
+    public void showBuilding(SpriteBatch batch, Rectangle screen){
+        for(int i =0;i<buildings.size();i++) {
+            if(buildings.get(i).getRect().overlaps(screen)) {
+                buildings.get(i).draw(batch);
+            }
         }
     }
     public void showUnits(SpriteBatch batch){

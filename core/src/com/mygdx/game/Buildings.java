@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -43,6 +44,9 @@ class Building {
     }
     public Sprite getSprite(){
         return image;
+    }
+    public Rectangle getRect(){
+        return image.getBoundingRectangle();
     }
     //-----------------Void Type--------------------------
     public void setPosition(float x,float y){
