@@ -19,6 +19,8 @@ public class MyGdxGame extends ApplicationAdapter{
 	Sprite img3;
 	ArrayList<Building> img4 = new ArrayList<Building>();
 
+	int timer =0;
+
 	Texture jianzaolan;
 	Unit BadTest = new Unit();
 	///mouse stuff
@@ -27,7 +29,7 @@ public class MyGdxGame extends ApplicationAdapter{
 	Building selectedBuilding;
 
 	Player Tester = new Player();
-
+	String lines = "Nothing";
 	Weapon testWeapon = new Weapon();
 	@Override
 	public void create () {
@@ -87,16 +89,12 @@ public class MyGdxGame extends ApplicationAdapter{
 		img2.setPosition(1594,495);
 		img3.setPosition(1760,498);
 
-
-
 		batch.begin();
 		mouseRect = new Rectangle(xPos,yPos,1,1);
 		batch.draw(jianzaolan,1596,0);
 		if(BadTest.getInScreen()) {
 			BadTest.showUnit(batch);
 		}
-		img2.draw(batch);
-		img3.draw(batch);
 		if(mouseRect.overlaps(new Rectangle(img2.getBoundingRectangle()))&&Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 			System.out.println("ture");
 			selectedBuilding = new Building(100,"Test",0,0,"null",img2,testWeapon);
@@ -105,16 +103,24 @@ public class MyGdxGame extends ApplicationAdapter{
 		if(mouseRect.overlaps(new Rectangle(img3.getBoundingRectangle()))&&Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 			selectedBuilding = new Building(100,"Test",0,0,"null",img3,testWeapon);
 		}
-		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)&&xPos>0&&xPos<1594&&yPos>0&&yPos<1080){
-			selectedBuilding.setPosition(xPos,Math.abs(yPos-1080));
-			Tester.addBuilding(selectedBuilding);
-			selectedBuilding = null;
+		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)&&xPos>0&&xPos<1594&&yPos>0&&yPos<1080&&timer>100){
+			if(Tester.getMoney()>selectedBuilding.getCost()) {
+				selectedBuilding.setPosition(xPos, Math.abs(yPos - 1080));
+				Tester.addBuilding(selectedBuilding);
+				timer = 0;
+			}else{
+				lines = "Not Enough Money";
+			}
 		}
+		img2.draw(batch);
+		img3.draw(batch);
+		timer+=5;
 		//BadTest.moveTo(50,50,batch);
-
-
-
+		if(Tester.getBuildings().size()>0){
+			Tester.showBuilding(batch);
+		}
 		font.draw(batch, ""+xPos+", "+yPos, 0, 1080);
+		font.draw(batch, lines, 100, 1080);
 		//font.draw(batch, ""+(selectedBuilding.equals(img2)), 0, 1050);
 		batch.end();
 

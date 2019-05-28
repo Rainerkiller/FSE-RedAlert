@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+
+import java.awt.*;
 
 class Unit {
     private int health;
@@ -11,6 +14,7 @@ class Unit {
     private Sprite currentAction;
     private Sprite [] movingActions;
     private String weapon;
+    private String status;
 
     //--------------------Set up----------------------
 
@@ -37,6 +41,9 @@ class Unit {
         return staticPicture;
     }
     public boolean isAlive(){return  health>0; }
+    public Rectangle getRect(){
+        return staticPicture.getBoundingRectangle();
+    }
     //-----------------Void Type-----------------------
 
     public void loadUnits(int hp,String Arm,Sprite StaticMotion ,String Weapon){
