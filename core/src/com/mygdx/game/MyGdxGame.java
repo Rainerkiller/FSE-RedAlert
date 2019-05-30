@@ -37,6 +37,7 @@ public class MyGdxGame extends ApplicationAdapter{
 		font.getData().setScale(2f);
 
 		batch = new SpriteBatch();
+
 		img = new Texture("badlogic.jpg");
 		img2 =new Sprite( new Texture("badlogic.jpg"));
 		img3 =new Sprite( new Texture("badlogic.jpg"));
