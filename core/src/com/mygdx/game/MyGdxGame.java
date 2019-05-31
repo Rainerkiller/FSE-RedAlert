@@ -68,16 +68,19 @@ public class MyGdxGame extends ApplicationAdapter{
 				img4.get(i).setPosition(img4.get(i).getSprite().getX()-5,img4.get(i).getSprite().getX()+5);
 			}
 			BadTest.setPosition(BadTest.getSprite().getX() -5, BadTest.getSprite().getY() +5 );
+
 		}else if(xPos < 100 && yPos < 100){
 			for(int i = 0;i < img4.size(); i++){
 				img4.get(i).setPosition(img4.get(i).getSprite().getX() + 5,img4.get(i).getSprite().getX() - 5);
 			}
 			BadTest.setPosition(BadTest.getSprite().getX() +5, BadTest.getSprite().getY() -5);
+
 		}else if(xPos<100&&yPos>800){
 			for(int i = 0;i<img4.size();i++){
 				img4.get(i).setPosition(img4.get(i).getSprite().getX()+5,img4.get(i).getSprite().getX()+5);
 			}
 			BadTest.setPosition(BadTest.getSprite().getX() +5, BadTest.getSprite().getY() +5);
+
 		}else if(xPos>800&&yPos<100&&xPos<1596){
 			for(int i = 0;i<img4.size();i++){
 				img4.get(i).setPosition(img4.get(i).getSprite().getX()-5,img4.get(i).getSprite().getX()-5);
@@ -96,10 +99,10 @@ public class MyGdxGame extends ApplicationAdapter{
 		if(BadTest.getInScreen()) {
 			BadTest.showUnit(batch);
 		}
+
 		if(mouseRect.overlaps(new Rectangle(img2.getBoundingRectangle()))&&Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 			System.out.println("ture");
 			selectedBuilding = new Building(100,"Test",0,0,"null",img2,testWeapon);
-
 		}
 		if(mouseRect.overlaps(new Rectangle(img3.getBoundingRectangle()))&&Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
 			selectedBuilding = new Building(100,"Test",0,0,"null",img3,testWeapon);
