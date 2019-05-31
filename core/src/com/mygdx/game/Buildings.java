@@ -57,7 +57,7 @@ class Building {
     }
 
     public void takeDamage(Weapon CurrentWeapon) {
-        health = health - CurrentWeapon.getDamage();
+        health = health - CurrentWeapons.getDamage();
     }
     public void draw(SpriteBatch batch){
         image.draw(batch);
