@@ -11,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-
     Sprite miner = new Sprite(new Texture("miner.jpg"));
 
     @Override
@@ -34,14 +33,15 @@ public class MyGame extends ApplicationAdapter {
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
             miner.setPosition(miner.getX()-1,miner.getY());
-
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
             miner.setPosition(miner.getX()+1,miner.getY());
         }
         if (Gdx.input.isKeyPressed(Input.Keys.P)){
 
-        }        batch.draw(img, 0, 0);
+        }
+
+        batch.draw(img, 0, 0);
         batch.end();
     }
 }
