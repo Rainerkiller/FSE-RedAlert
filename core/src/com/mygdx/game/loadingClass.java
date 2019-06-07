@@ -37,4 +37,7 @@ class loadingClass extends ApplicationAdapter {
         roleStatic.add(new Sprite(new Texture("pics/roleStatic2.png")));
 
     }
+    public void loadccoal(){
+
+    }
 }
