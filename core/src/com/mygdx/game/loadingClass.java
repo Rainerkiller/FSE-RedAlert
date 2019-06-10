@@ -18,17 +18,14 @@ class loadingClass extends ApplicationAdapter {
 
     }
     public loadingClass(String a){
-        loadDirt();
+        loadDirt(6);
         loadRole();
     }
-    public void loadDirt(){
+    public void loadDirt(int numOfSprite){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
-        picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth1.png"))));
-        picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth2.png"))));
-        picture.add(new Sprite(new Texture("pics/earth3.png")));
-        picture.add(new Sprite(new Texture("pics/earth4.png")));
-        picture.add(new Sprite(new Texture("pics/earth5.png")));
-        picture.add(new Sprite(new Texture("pics/earth6.png")));
+        for(int i = 0; i < numOfSprite; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth1.png"))));
+        }
         dirt = new orl("dirt", 0,picture);
     }
     public void loadRole(){
