@@ -13,6 +13,10 @@ class loadingClass extends ApplicationAdapter {
     orl steel;
     orl gold;
     orl dimand;
+    public loadingClass(){
+        loadDirt();
+        loadRole();
+    }
     public void loadDirt(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
         picture.add(new Sprite(new Texture("pics/earth1.png")));
@@ -35,9 +39,15 @@ class loadingClass extends ApplicationAdapter {
         walkR.add(new Sprite(new Texture("pics/roleWalkRight2.png")));
         roleStatic.add(new Sprite(new Texture("pics/roleStatic1.png")));
         roleStatic.add(new Sprite(new Texture("pics/roleStatic2.png")));
+        roleTakeDamage.add(new Sprite(new Texture("pics/roleTakeDamage1.png")));
+        roleTakeDamage.add(new Sprite(new Texture("pics/roleTakeDamage1.png")));
 
+        role = new Player(roleStatic, walkL,walkR,roleTakeDamage);
     }
     public void loadccoal(){
+    }
 
+    public Player getRole(){
+        return role;
     }
 }

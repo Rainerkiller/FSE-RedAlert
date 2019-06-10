@@ -47,13 +47,7 @@ public class MyGame extends ApplicationAdapter {
                     role.setPosition("right");
                 }
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)){
-                for(int i =0;i<orls.size();i++){
-                    if(box.overlaps(orls.get(i).getRect())){
-                        orls.get(i).mining();
-                    }
-                }
-            }
+            
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
                 status  = "pause";
             }
