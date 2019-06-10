@@ -24,9 +24,7 @@ public class MyGame extends ApplicationAdapter {
     @Override
     public void create () {
         batch = new SpriteBatch();
-        //img = new Texture("badlogic.jpg");
         A = new loadingClass("a");
-
         role = A.getRole();
     }
 
@@ -38,23 +36,23 @@ public class MyGame extends ApplicationAdapter {
 
             batch.begin();
         if(status.equals("game")) {
-            for(int i = 0;i<orls.size();i++){
-
-            }
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 // use translate(vx,vy), translateX(vx) or translateY(vy)
                 role.setPosition("up");
                 if(Gdx.input.isKeyPressed(Input.Keys.A)){
                     role.setPosition("left");
-                }if(Gdx.input.isKeyPressed(Input.Keys.D)){
+                }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
                     role.setPosition("right");
                 }
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            else if(Gdx.input.isKeyPressed(Input.Keys.A)){
                 role.setPosition("left");
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.D)){
                 role.setPosition("right");
+            } else{
+                role.setPosition("acc");
+                role.setPosition("static");
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {

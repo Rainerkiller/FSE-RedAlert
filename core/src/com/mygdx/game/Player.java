@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ class Player {
     String name;
     int Money;
     Sprite Current;
+    Rectangle body;
     ArrayList<Sprite> mining = new ArrayList<Sprite>();
     ArrayList<Sprite> noMotion = new ArrayList<Sprite>();
     ArrayList<Sprite> movingL = new ArrayList<Sprite>();
@@ -23,8 +25,12 @@ class Player {
     float currentX;
     float currentY;
 
+    float acceleration = 5;
+
+    int timer = 0;
     int picture = 0;
     public Player(ArrayList<Sprite> noMotion, ArrayList<Sprite> movingL, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage){
+        Current = noMotion.get(0);
         this.noMotion = noMotion;
         this.movingL = movingL;
         this.movingR = movingR;
@@ -33,6 +39,7 @@ class Player {
         Money = 0;
         health = 100;
         oxygen = 100;
+        body = Current.getBoundingRectangle();
     }
     public Player(){
         name = "role";
@@ -58,22 +65,40 @@ class Player {
 
     public void setPosition(String a){
         if(a.equals("up")){
-            currentY++;
+            currentY+=10;
+            acceleration = 5;
         }
-        if(a.equals("down")){
-            currentY--;
+        else if(a.equals("acc")) {
+            currentY -=acceleration;
+            acceleration++;
         }
-        if(a.equals("left")){
-            currentX--;
+        else if(a.equals("down")){
+            currentY-=5;
+        }
+        else if(a.equals("left")){
+            currentX-=5;
             left();
         }
-        if(a.equals("right")){
+        else if(a.equals("right")){
             right();
-            currentX++;
+            currentX+=5;
+        } else if(a.equals("static")){
+            Static();
         }
+        Current.setPosition(currentX,currentY);
+    }
+    public void Static(){
+        if (picture < movingL.size()-1&& timer>100) {
+            picture++;
+            timer = 0;
+        } else{
+            timer+=5;
+            picture = 0;
+        }
+        Current = noMotion.get(picture);
     }
     public void left() {
-        if (picture < movingL.size()) {
+        if (picture < movingL.size()-1) {
             picture++;
         } else {
             picture = 0;
@@ -81,7 +106,7 @@ class Player {
         Current = movingL.get(picture);
     }
     public void right() {
-        if (picture < movingR.size()) {
+        if (picture < movingR.size()-1) {
             picture++;
         } else {
             picture = 0;
@@ -112,4 +137,13 @@ class Player {
     public Sprite getCurrent(){
         return Current;
     }
+    public boolean getCollide(ArrayList<orl> orls){
+        for(int i = 0;i<orls.size();i++){
+            if(orls.get(i).getRect().overlaps(body)){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

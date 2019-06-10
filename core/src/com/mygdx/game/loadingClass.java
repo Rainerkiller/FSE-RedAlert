@@ -51,4 +51,7 @@ class loadingClass extends ApplicationAdapter {
     public Player getRole(){
         return role;
     }
+    public void creatOrl(){
+        
+    }
 }
