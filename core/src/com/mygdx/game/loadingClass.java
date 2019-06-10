@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
 
@@ -13,10 +14,17 @@ class loadingClass extends ApplicationAdapter {
     orl steel;
     orl gold;
     orl dimand;
+    public loadingClass(){
+
+    }
+    public loadingClass(String a){
+        loadDirt();
+        loadRole();
+    }
     public void loadDirt(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
-        picture.add(new Sprite(new Texture("pics/earth1.png")));
-        picture.add(new Sprite(new Texture("pics/earth2.png")));
+        picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth1.png"))));
+        picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth2.png"))));
         picture.add(new Sprite(new Texture("pics/earth3.png")));
         picture.add(new Sprite(new Texture("pics/earth4.png")));
         picture.add(new Sprite(new Texture("pics/earth5.png")));
@@ -35,9 +43,15 @@ class loadingClass extends ApplicationAdapter {
         walkR.add(new Sprite(new Texture("pics/roleWalkRight2.png")));
         roleStatic.add(new Sprite(new Texture("pics/roleStatic1.png")));
         roleStatic.add(new Sprite(new Texture("pics/roleStatic2.png")));
+        roleTakeDamage.add(new Sprite(new Texture("pics/roleTakeDamage1.png")));
+        roleTakeDamage.add(new Sprite(new Texture("pics/roleTakeDamage1.png")));
 
+        role = new Player(roleStatic, walkL,walkR,roleTakeDamage);
     }
     public void loadccoal(){
+    }
 
+    public Player getRole(){
+        return role;
     }
 }

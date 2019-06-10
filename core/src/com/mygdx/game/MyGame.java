@@ -14,17 +14,20 @@ import java.util.ArrayList;
 public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    Sprite miner = new Sprite(new Texture("miner.jpg"));
-    Rectangle box = new Rectangle(miner.getBoundingRectangle());
     String status = "game";
 
     ArrayList<orl> orls = new ArrayList<orl>();
+    loadingClass A = new loadingClass();
+
 
     Player role = new Player();
     @Override
     public void create () {
         batch = new SpriteBatch();
-        img = new Texture("badlogic.jpg");
+        //img = new Texture("badlogic.jpg");
+        A = new loadingClass("a");
+
+        role = A.getRole();
     }
 
     @Override
@@ -47,18 +50,17 @@ public class MyGame extends ApplicationAdapter {
                     role.setPosition("right");
                 }
             }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)){
-                for(int i =0;i<orls.size();i++){
-                    if(box.overlaps(orls.get(i).getRect())){
-                        orls.get(i).mining();
-                    }
-                }
+            if(Gdx.input.isKeyPressed(Input.Keys.A)){
+                role.setPosition("left");
             }
+            else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+                role.setPosition("right");
+            }
+
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
                 status  = "pause";
             }
-            batch.draw(img, 0, 0);
-
+            role.getCurrent().draw(batch);
         }
         batch.end();
     }
