@@ -17,6 +17,8 @@ class loadingClass extends ApplicationAdapter {
     float x =0;
     float y = 100;
 
+    orl diamond;
+    orl loadPics;
     public loadingClass(){
 
     }
@@ -24,6 +26,7 @@ class loadingClass extends ApplicationAdapter {
         loadDirt();
         loadRole();
     }
+
     public void loadDirt(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
         for(int i = 0; i < 6; i++){
