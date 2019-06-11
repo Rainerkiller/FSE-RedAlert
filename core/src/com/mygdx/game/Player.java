@@ -172,7 +172,7 @@ class Player {
     }
     public boolean getCollide(ArrayList<Sprite> orls){
         for(int i = 0;i<orls.size();i++){
-            if(orls.get(i).getRect().overlaps(body)){
+            if(orls.get(i).getBoundingRectangle().overlaps(body)){
                 return true;
             }
         }

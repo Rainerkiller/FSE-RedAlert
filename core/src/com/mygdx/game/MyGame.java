@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    String status = "startUp";
+    String status = "game";
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
     Player role = new Player();
@@ -143,43 +143,34 @@ public class MyGame extends ApplicationAdapter {
         }
 
 
-
-
         else if(status.equals("game")) {
-            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                // use translate(vx,vy), translateX(vx) or translateY(vy)
-                role.setPosition("up");
-                if(Gdx.input.isKeyPressed(Input.Keys.A)){
-                    role.setPosition("upLeft");
-                }else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-                    role.setPosition("upRight");
+            if(!role.getCollide(sprites)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    // use translate(vx,vy), translateX(vx) or translateY(vy)
+                    role.setPosition("up");
+                    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                        role.setPosition("upLeft");
+                    } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                        role.setPosition("upRight");
+                    }
+                } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                    role.setPosition("left");
+                } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                    role.setPosition("right");
+                } else if (role.getCollide(sprites)) {
+                    role.setPosition("static");
+                } else {
+                    role.setPosition("acc");
                 }
             }
-            else if(Gdx.input.isKeyPressed(Input.Keys.A)){
-                role.setPosition("left");
-            }
-            else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-                role.setPosition("right");
-            } else if (role.getCollide()){
-                role.setPosition("static");
-            }else{
-                role.setPosition("acc");
-            }
-
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
                 status  = "pause";
             }
 
-            batch.begin();
             for(int i =0;i<1000;i++) {
                 sprites.get(i).draw(batch);
             }
-            for(int i = 0;i < 10;i++){
-                orls.get(i).getCurrent().draw(batch);
-            }
-
             role.getCurrent().draw(batch);
-            batch.end();
 
         }
         batch.end();
