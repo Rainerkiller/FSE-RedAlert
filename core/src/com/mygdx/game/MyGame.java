@@ -15,26 +15,22 @@ public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
     String status = "game";
-
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
-
-
     Player role = new Player();
     @Override
     public void create () {
         batch = new SpriteBatch();
         A = new loadingClass("a");
         role = A.getRole();
+        orls = A.getWorld();
     }
 
     @Override
     public void render () {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
-            batch.begin();
+        batch.begin();
         if(status.equals("game")) {
             if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                 // use translate(vx,vy), translateX(vx) or translateY(vy)
@@ -50,16 +46,25 @@ public class MyGame extends ApplicationAdapter {
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.D)){
                 role.setPosition("right");
-            } else{
-                role.setPosition("acc");
+            } else if (role.getCollide(orls)){
                 role.setPosition("static");
+            }else{
+                role.setPosition("acc");
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
                 status  = "pause";
             }
+            for(int i =0;i<10;i++){
+                orls.get(i).getCurrent().draw(batch);
+            }
             role.getCurrent().draw(batch);
+
         }
         batch.end();
+    }
+    @Override
+    public void dispose(){
+        batch.dispose();
     }
 }

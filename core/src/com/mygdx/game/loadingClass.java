@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 class loadingClass extends ApplicationAdapter {
     Player role;
+    ArrayList<orl> world = new ArrayList<orl>();
     orl dirt;
     orl coal;
     orl steel;
@@ -18,15 +19,16 @@ class loadingClass extends ApplicationAdapter {
 
     }
     public loadingClass(String a){
-        loadDirt(6);
+        loadDirt();
         loadRole();
+        creatOrl();
     }
-    public void loadDirt(int numOfSprite){
+    public void loadDirt(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
-        for(int i = 0; i < numOfSprite; i++){
-            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth1.png"))));
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
         }
-        dirt = new orl("dirt", 0,picture);
+        dirt = new orl("dirt", 0,picture,new Sprite(new Texture("pics/earth1.png")));
     }
     public void loadRole(){
         ArrayList<Sprite> walkR = new ArrayList<Sprite>();
@@ -47,11 +49,26 @@ class loadingClass extends ApplicationAdapter {
     }
     public void loadccoal(){
     }
-
+    public ArrayList<orl> getWorld(){
+        return world;
+    }
     public Player getRole(){
         return role;
     }
     public void creatOrl(){
-        
+        float x =0;
+        float y = 100;
+        for(int i =0;i<1000;i++){
+            dirt.setPostion(x,y);
+            System.out.print(x);
+            System.out.println(" "+y);
+            world.add(dirt);
+            x+=76;
+            if(i%10 == 0){
+                System.out.println("nexTlINE");
+                y-=76;
+                x=0;
+            }
+        }
     }
 }

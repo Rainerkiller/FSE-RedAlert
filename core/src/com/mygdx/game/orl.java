@@ -14,10 +14,11 @@ class orl {
     boolean Appear = true;
     Sprite Current;
     Sprite Pic = new Sprite();
-    ArrayList<Sprite> inDirty = new ArrayList<Sprite>();
+    ArrayList<Sprite> inDirty;
 
-    public orl(String name,int p, ArrayList<Sprite> load){
+    public orl(String name,int p, ArrayList<Sprite> load, Sprite current){
         this.name = name;
+        Current = current;
         price = p;
         inDirty = load;
     }
@@ -27,7 +28,7 @@ class orl {
     public boolean getApear(){
         return Appear;
     }
-
+    public Sprite getCurrent(){return Current;}
     public void mining(){
         if(percentage>0) {
             percentage -= 0.01;
@@ -37,7 +38,12 @@ class orl {
             Current = Pic;
         }
     }
-
+    public void setPostion(float x,float y){
+        for(int i =0; i < inDirty.size();i++){
+            inDirty.get(i).setPosition(x,y);
+        }
+        Current.setPosition(x,y);
+    }
     public void pickUp(){
         if(Appear){
             Appear = false;
