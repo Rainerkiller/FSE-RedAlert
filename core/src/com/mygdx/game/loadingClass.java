@@ -14,7 +14,8 @@ class loadingClass extends ApplicationAdapter {
     orl coal;
     orl steel;
     orl gold;
-    orl dimand;
+    orl diamond;
+    orl loadPics;
     public loadingClass(){
 
     }
@@ -23,6 +24,7 @@ class loadingClass extends ApplicationAdapter {
         loadRole();
         creatOrl();
     }
+
     public void loadDirt(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
         for(int i = 0; i < 6; i++){
