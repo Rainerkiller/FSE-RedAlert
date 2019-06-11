@@ -16,7 +16,9 @@ class Player {
     ArrayList<Sprite> movingL = new ArrayList<Sprite>();
     ArrayList<Sprite> movingR = new ArrayList<Sprite>();
     ArrayList<Sprite> takeDamage = new ArrayList<Sprite>();
-
+    ArrayList<Sprite> fly = new ArrayList<Sprite>();
+    ArrayList<Sprite> flyLeft = new ArrayList<Sprite>();
+    ArrayList<Sprite> flyRight = new ArrayList<Sprite>();
 
     String [] bag = new String[18];
     float health;
@@ -24,17 +26,21 @@ class Player {
     float depth = 0;
     float currentX;
     float currentY;
-
-    float acceleration = 5;
-
+    float acceleration = 3;
     int timer = 0;
     int picture = 0;
-    public Player(ArrayList<Sprite> noMotion, ArrayList<Sprite> movingL, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage){
+    float speed = 3;
+
+    public Player(ArrayList<Sprite> noMotion, ArrayList<Sprite> movingL
+            ,ArrayList<Sprite> fly,ArrayList<Sprite> flyRight,ArrayList<Sprite> flyLeft, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage){
         Current = noMotion.get(0);
         this.noMotion = noMotion;
         this.movingL = movingL;
         this.movingR = movingR;
         this.takeDamage = takeDamage;
+        this.fly = fly;
+        this.flyLeft = flyLeft;
+        this.flyRight = flyRight;
         name = "role";
         Money = 0;
         health = 100;
@@ -65,11 +71,23 @@ class Player {
 
     public void setPosition(String a){
         if(a.equals("up")){
-            currentY+=10;
+            up();
+            currentY+=speed;
             acceleration = 5;
         }
+        else if(a.equals("upLeft")){
+            upLeft();
+            currentY+=speed;
+            currentX-=5;
+        }
+        else if(a.equals("upRight")){
+            upRight();
+            currentX+=5;
+            currentY+=speed;
+        }
         else if(a.equals("acc")) {
-            currentY -=acceleration;
+            acc();
+            currentY -=speed;
             acceleration++;
         }
         else if(a.equals("down")){
@@ -85,7 +103,22 @@ class Player {
         } else if(a.equals("static")){
             Static();
         }
+        refreshPosition();
         Current.setPosition(currentX,currentY);
+        body = Current.getBoundingRectangle();
+
+    }
+    public void acc(){
+        Current = noMotion.get(0);
+    }
+    public void upLeft(){
+        Current = flyLeft.get(0);
+    }
+    public void upRight(){
+        Current = flyRight.get(0);
+    }
+    public void up(){
+        Current = fly.get(0);
     }
     public void Static(){
         if (picture < movingL.size()-1&& timer>100) {
@@ -137,7 +170,7 @@ class Player {
     public Sprite getCurrent(){
         return Current;
     }
-    public boolean getCollide(ArrayList<orl> orls){
+    public boolean getCollide(ArrayList<Sprite> orls){
         for(int i = 0;i<orls.size();i++){
             if(orls.get(i).getRect().overlaps(body)){
                 return true;

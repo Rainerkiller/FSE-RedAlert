@@ -9,19 +9,20 @@ import java.util.ArrayList;
 
 class loadingClass extends ApplicationAdapter {
     Player role;
-    ArrayList<orl> world = new ArrayList<orl>();
     orl dirt;
     orl coal;
     orl steel;
     orl gold;
     orl dimand;
+    float x =0;
+    float y = 100;
+
     public loadingClass(){
 
     }
     public loadingClass(String a){
         loadDirt();
         loadRole();
-        creatOrl();
     }
     public void loadDirt(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
@@ -35,6 +36,9 @@ class loadingClass extends ApplicationAdapter {
         ArrayList<Sprite> walkL = new ArrayList<Sprite>();
         ArrayList<Sprite> roleStatic = new ArrayList<Sprite>();
         ArrayList<Sprite> roleTakeDamage = new ArrayList<Sprite>();
+        ArrayList<Sprite> roleJetLeft = new ArrayList<Sprite>();
+        ArrayList<Sprite> roleJetRight = new ArrayList<Sprite>();
+        ArrayList<Sprite> roleJet = new ArrayList<Sprite>();
 
         walkL.add(new Sprite(new Texture("pics/roleWalkLeft1.png")));
         walkL.add(new Sprite(new Texture("pics/roleWalkLeft2.png")));
@@ -44,31 +48,19 @@ class loadingClass extends ApplicationAdapter {
         roleStatic.add(new Sprite(new Texture("pics/roleStatic2.png")));
         roleTakeDamage.add(new Sprite(new Texture("pics/roleTakeDamage1.png")));
         roleTakeDamage.add(new Sprite(new Texture("pics/roleTakeDamage1.png")));
+        roleJetLeft.add(new Sprite(new Texture("pics/roleJetLeft1.png")));
+        roleJetLeft.add(new Sprite(new Texture("pics/roleJetLeft2.png")));
+        roleJetRight.add(new Sprite(new Texture("pics/roleJetRight1.png")));
+        roleJetRight.add(new Sprite(new Texture("pics/roleJetRight2.png")));
+        roleJet.add(new Sprite(new Texture("pics/roleJet1.png")));
+        roleJet.add(new Sprite(new Texture("pics/roleJet2.png")));
 
-        role = new Player(roleStatic, walkL,walkR,roleTakeDamage);
+        role = new Player(roleStatic, walkL,roleJet,roleJetRight,roleJetLeft,walkR,roleTakeDamage);
     }
     public void loadccoal(){
     }
-    public ArrayList<orl> getWorld(){
-        return world;
-    }
+    public orl getDirt(){return dirt;}
     public Player getRole(){
         return role;
-    }
-    public void creatOrl(){
-        float x =0;
-        float y = 100;
-        for(int i =0;i<1000;i++){
-            dirt.setPostion(x,y);
-            System.out.print(x);
-            System.out.println(" "+y);
-            world.add(dirt);
-            x+=76;
-            if(i%10 == 0){
-                System.out.println("nexTlINE");
-                y-=76;
-                x=0;
-            }
-        }
     }
 }

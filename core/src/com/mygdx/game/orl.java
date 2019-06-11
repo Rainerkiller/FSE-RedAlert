@@ -21,6 +21,7 @@ class orl {
         Current = current;
         price = p;
         inDirty = load;
+        setPostion(0,0);
     }
     public Rectangle getRect(){
         return Current.getBoundingRectangle();
@@ -39,7 +40,7 @@ class orl {
         }
     }
     public void setPostion(float x,float y){
-        for(int i =0; i < inDirty.size();i++){
+        for(int i = 0; i < inDirty.size();i++){
             inDirty.get(i).setPosition(x,y);
         }
         Current.setPosition(x,y);
