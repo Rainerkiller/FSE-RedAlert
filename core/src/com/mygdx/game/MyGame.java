@@ -44,7 +44,7 @@ public class MyGame extends ApplicationAdapter {
         A = new loadingClass("a");
         role = A.getRole();
         orl dirt = A.getDirt();
-
+        role.setPosition("");
         for(int i = 0;i<1000;i++){
             Sprite copy = new Sprite(dirt.getCurrent());
             sprites.add(copy);
