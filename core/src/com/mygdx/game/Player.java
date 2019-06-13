@@ -26,10 +26,10 @@ class Player {
     float depth = 0;
     float currentX;
     float currentY;
-    float acceleration = 3;
+    float acceleration = 1;
     int timer = 0;
     int picture = 0;
-    float speed = 3;
+    float speed = 0;
 
     public Player(ArrayList<Sprite> noMotion, ArrayList<Sprite> movingL
             ,ArrayList<Sprite> fly,ArrayList<Sprite> flyRight,ArrayList<Sprite> flyLeft, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage){
@@ -46,6 +46,11 @@ class Player {
         health = 100;
         oxygen = 100;
         body = Current.getBoundingRectangle();
+        body.setX(body.getX()+20);
+        body.setY(body.getY()+20);
+        body.setHeight(76);
+        body.setWidth(50);
+        setPosition(0,1000);
     }
     public Player(){
         name = "role";
@@ -68,12 +73,18 @@ class Player {
     public String[] getBag() {
         return bag;
     }
-
+    public void setPosition(float x,float y){
+        currentX = x;
+        currentY = y;
+        refreshPosition();
+    }
     public void setPosition(String a){
         if(a.equals("up")){
             up();
             currentY+=speed;
-            acceleration = 5;
+            if(speed<6){
+                speed+=acceleration;
+            }
         }
         else if(a.equals("upLeft")){
             upLeft();
@@ -88,7 +99,9 @@ class Player {
         else if(a.equals("acc")) {
             acc();
             currentY -=speed;
-            acceleration++;
+            if(speed<6){
+                speed+=acceleration;
+            }
         }
         else if(a.equals("down")){
             currentY-=5;
@@ -106,6 +119,9 @@ class Player {
         refreshPosition();
         Current.setPosition(currentX,currentY);
         body = Current.getBoundingRectangle();
+        body.setX(body.getX()+20);
+        body.setHeight(76);
+        body.setWidth(74);
 
     }
     public void acc(){
@@ -170,13 +186,58 @@ class Player {
     public Sprite getCurrent(){
         return Current;
     }
-    public boolean getCollide(ArrayList<Sprite> orls){
+    public boolean getCollide(ArrayList<orl> orls){
         for(int i = 0;i<orls.size();i++){
-            if(orls.get(i).getBoundingRectangle().overlaps(body)){
-                return true;
+            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
+                System.out.print(orls.get(i).getCurrent().getX()+"   ");
+                System.out.println(body.getX());
+                if(orls.get(i).getCurrent().getX()<body.getX()) {
+                    return true;
+                }
             }
         }
         return false;
     }
-
+    public boolean getCollideRight(ArrayList<orl> orls){
+        for(int i = 0;i<orls.size();i++){
+            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
+                if(orls.get(i).getCurrent().getBoundingRectangle().getX()>(body.getX()+body.getWidth())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean getCollideLeft(ArrayList<orl> orls){
+        for(int i = 0;i<orls.size();i++){
+            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
+                if((orls.get(i).getCurrent().getBoundingRectangle().getX()+orls.get(i).getCurrent().getBoundingRectangle().getWidth())<body.getX()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public orl getCollideOrl(ArrayList<orl> orls){
+        orl get = new orl();
+        for(int i = 0;i<orls.size();i++){
+            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
+                if(orls.get(i).getCurrent().getX()<body.getX()) {
+                    get = orls.get(i);
+                }
+            }
+        }
+        return get;
+    }
+    public orl getCollideOrlLeft(ArrayList<orl> orls){
+        orl get = new orl();
+        for(int i = 0;i<orls.size();i++){
+            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
+                if(orls.get(i).getCurrent().getBoundingRectangle().getX()+orls.get(i).getCurrent().getBoundingRectangle().getWidth()<body.getX()) {
+                    get = orls.get(i);
+                }
+            }
+        }
+        return get;
+    }
 }
