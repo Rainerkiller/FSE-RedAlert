@@ -52,9 +52,32 @@ class orl {
         return Appear;
     }
     public Sprite getCurrent(){return Current;}
+    public boolean getOrlLeft(Player role){
+        float roleX = role.getBody().getX();
+        float roleY = role.getBody().getY();
+        float roleMid = roleY + role.getBody().getHeight()/2;
+        if(Current.getBoundingRectangle().overlaps(role.getBody())){
+            if(Current.getX()>)
+        }
+    }
     public void mining(){
         if(percentage>0) {
             percentage -= 5;
+        }else{
+            Appear = false;
+        }
+        if(percentage<10){
+            Current = getInDirty().get(5);
+        }else if(percentage<25){
+            Current = getInDirty().get(4);
+        }else if(percentage<40){
+            Current = getInDirty().get(3);
+        }else if(percentage<55){
+            Current = getInDirty().get(2);
+        }else if(percentage<70){
+            Current = getInDirty().get(1);
+        }else if(percentage<85){
+            Current = getInDirty().get(0);
         }
     }
     public void setPostion(float x,float y){

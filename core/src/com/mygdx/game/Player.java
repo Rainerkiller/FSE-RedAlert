@@ -162,7 +162,9 @@ class Player {
         }
         Current = movingR.get(picture);
     }
-
+    public Rectangle getBody(){
+        return body;
+    }
     public void refreshPosition(){
         for(int i =0;i<noMotion.size();i++){
             noMotion.get(i).setPosition(currentX,currentY);
@@ -211,7 +213,9 @@ class Player {
     public boolean getCollideLeft(ArrayList<orl> orls){
         for(int i = 0;i<orls.size();i++){
             if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
-                if((orls.get(i).getCurrent().getBoundingRectangle().getX()+orls.get(i).getCurrent().getBoundingRectangle().getWidth())<body.getX()) {
+                if((orls.get(i).getCurrent().getBoundingRectangle().getX()+orls.get(i).getCurrent().getBoundingRectangle().getWidth())<body.getX() &&
+                        (orls.get(i).getCurrent().getBoundingRectangle().getY()+orls.get(i).getCurrent().getBoundingRectangle().getHeight())>body.getY()+body.getHeight()/2
+                ) {
                     return true;
                 }
             }

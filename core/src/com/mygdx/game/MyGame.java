@@ -45,12 +45,12 @@ public class MyGame extends ApplicationAdapter {
         role = A.getRole();
         orl dirt = A.getDirt();
         role.setPosition("");
-        for(int i = 0;i<1000;i++){
+        for(int i = 0;i<3000;i++){
             orl copy2 = new orl(dirt);
             orls.add(copy2);
             orls.get(i).setPostion(x,y);
             x = x+76;
-            if(i%10==0){
+            if(i%30==0){
                 x = 0;
                 y-=76;
             }
@@ -152,6 +152,8 @@ public class MyGame extends ApplicationAdapter {
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                     if (!role.getCollide(orls)) {
+                        role.setPosition("left");
+
                         role.setPosition("acc");
                     } else if(role.getCollideLeft(orls)){
                         orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
@@ -179,8 +181,12 @@ public class MyGame extends ApplicationAdapter {
                 status  = "pause";
             }
 
-            for(int i =0;i<1000;i++) {
-                orls.get(i).getCurrent().draw(batch);
+            for(int i =0;i<orls.size();i++) {
+                if(orls.get(i).Appear) {
+                    orls.get(i).getCurrent().draw(batch);
+                }else{
+                    orls.remove(i);
+                }
             }
             role.getCurrent().draw(batch);
 
