@@ -20,6 +20,7 @@ public class MyGame extends ApplicationAdapter {
     String status = "game";
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
+    otherObject B = new otherObject();
     Player role = new Player();
     float x = 641;
     float y = 477;
@@ -38,6 +39,12 @@ public class MyGame extends ApplicationAdapter {
 
 
 
+
+
+
+
+
+
     @Override
     public void create () {
         batch = new SpriteBatch();
@@ -49,6 +56,13 @@ public class MyGame extends ApplicationAdapter {
         orl dirt = A.getDirt();
         orl coal = A.getCoal();
         role.setPosition("");
+
+        A.back.setPosition(0,-476);
+        B = new otherObject();
+
+
+
+
         for(int i = 0;i<3000;i++){
             orl copy2 = new orl(coal);
             orls.add(copy2);
@@ -60,6 +74,7 @@ public class MyGame extends ApplicationAdapter {
             }
         }
     }
+
     @Override
     public void render () {
 
@@ -81,6 +96,7 @@ public class MyGame extends ApplicationAdapter {
                 cover.draw(batch);
             }
             else{
+
                 cover.draw(batch);
                 font.draw(batch, "Press any button to start.", 480, 100);
                 startUpTimer+=1;
@@ -146,6 +162,11 @@ public class MyGame extends ApplicationAdapter {
 
 
         else if(status.equals("game")) {
+
+
+            A.getBack().draw(batch);
+
+
 
             if(role.getBody().overlaps(worldRect)) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -283,7 +304,12 @@ public class MyGame extends ApplicationAdapter {
             }
             role.getCurrent().draw(batch);
 
+
+
+
+
         }
+
         batch.end();
     }
     @Override
@@ -291,8 +317,14 @@ public class MyGame extends ApplicationAdapter {
         batch.dispose();
     }
     public void moveWorld(float x,float y){
+
         for(int i = 0;i<orls.size();i++){
             orls.get(i).moveOrl(x,y);
+
         }
+        A.getBack().translateX(x);
+        A.getBack().translateY(y);
+
+
     }
 }

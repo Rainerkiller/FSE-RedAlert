@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
-class Toolbox {
+public class Toolbox {
     private boolean mouseLeftClicked, mouseRightClicked;
 
     //get mouse X position

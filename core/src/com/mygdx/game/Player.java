@@ -188,17 +188,21 @@ class Player {
         Current = noMotion.get(picture);
     }
     public void left() {
-        if (picture < movingL.size()-1) {
+        if (picture < movingL.size()-1&& timer>100) {
             picture++;
+            timer = 0;
         } else {
+            timer+=15;
             picture = 0;
         }
         Current = movingL.get(picture);
     }
     public void right() {
-        if (picture < movingR.size()-1) {
+        if (picture < movingR.size()-1&& timer>100) {
             picture++;
+            timer = 0;
         } else {
+            timer+=15;
             picture = 0;
         }
         Current = movingR.get(picture);

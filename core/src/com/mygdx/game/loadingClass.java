@@ -16,6 +16,7 @@ class loadingClass extends ApplicationAdapter {
     orl dimand;
     float x =0;
     float y = 100;
+    Sprite back;
 
     orl diamond;
     orl loadPics;
@@ -26,6 +27,11 @@ class loadingClass extends ApplicationAdapter {
         loadDirt();
         loadRole();
         loadCoal();
+        loadBack();
+
+    }
+    public void loadBack(){
+        back = new Sprite(new Texture(Gdx.files.internal("pics/earthScreen.png")));
     }
 
     public void loadDirt(){
@@ -80,4 +86,5 @@ class loadingClass extends ApplicationAdapter {
     public Player getRole(){
         return role;
     }
+    public Sprite getBack(){return back;}
 }
