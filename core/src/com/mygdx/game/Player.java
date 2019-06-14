@@ -46,17 +46,20 @@ class Player {
         health = 100;
         oxygen = 100;
         body = Current.getBoundingRectangle();
-        body.setX(body.getX()+20);
+        body.setX(body.getX()+10);
         body.setY(body.getY()+20);
         body.setHeight(76);
         body.setWidth(50);
-        setPosition(0,1000);
+        setPosition(641,477);
     }
     public Player(){
         name = "role";
         Money = 0;
         health = 100;
         oxygen = 100;
+    }
+    public float getSpeed(){
+        return speed;
     }
     public int getMoney(){
         return Money;
@@ -82,7 +85,7 @@ class Player {
         if(a.equals("up")){
             up();
             currentY+=speed;
-            if(speed<6){
+            if(speed<5){
                 speed+=acceleration;
             }
         }
@@ -99,7 +102,7 @@ class Player {
         else if(a.equals("acc")) {
             acc();
             currentY -=speed;
-            if(speed<6){
+            if(speed<5){
                 speed+=acceleration;
             }
         }
@@ -115,13 +118,17 @@ class Player {
             currentX+=5;
         } else if(a.equals("static")){
             Static();
+        }else if(a.equals("fakeAcc")){
+            if(speed<6){
+                speed+=acceleration;
+            }
         }
         refreshPosition();
         Current.setPosition(currentX,currentY);
         body = Current.getBoundingRectangle();
-        body.setX(body.getX()+20);
+        body.setX(body.getX()+10);
         body.setHeight(76);
-        body.setWidth(74);
+        body.setWidth(50);
 
     }
     public void acc(){
@@ -162,7 +169,9 @@ class Player {
         }
         Current = movingR.get(picture);
     }
-
+    public Rectangle getBody(){
+        return body;
+    }
     public void refreshPosition(){
         for(int i =0;i<noMotion.size();i++){
             noMotion.get(i).setPosition(currentX,currentY);
@@ -189,11 +198,7 @@ class Player {
     public boolean getCollide(ArrayList<orl> orls){
         for(int i = 0;i<orls.size();i++){
             if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
-                System.out.print(orls.get(i).getCurrent().getX()+"   ");
-                System.out.println(body.getX());
-                if(orls.get(i).getCurrent().getX()<body.getX()) {
-                    return true;
-                }
+                return true;
             }
         }
         return false;
@@ -209,9 +214,10 @@ class Player {
         return false;
     }
     public boolean getCollideLeft(ArrayList<orl> orls){
-        for(int i = 0;i<orls.size();i++){
-            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
-                if((orls.get(i).getCurrent().getBoundingRectangle().getX()+orls.get(i).getCurrent().getBoundingRectangle().getWidth())<body.getX()) {
+        for(int i = 0;i<orls.size();i++) {
+            Rectangle orl = orls.get(i).getRect();
+            if (orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)) {
+                if(orl.getY()+orl.getHeight()>body.getY()+body.getHeight()/2) {
                     return true;
                 }
             }
@@ -220,24 +226,31 @@ class Player {
     }
     public orl getCollideOrl(ArrayList<orl> orls){
         orl get = new orl();
-        for(int i = 0;i<orls.size();i++){
-            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
-                if(orls.get(i).getCurrent().getX()<body.getX()) {
+        for(int i = 0;i<orls.size();i++) {
+            if (orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)) {
+                if (orls.get(i).getCurrent().getX() < body.getX()) {
                     get = orls.get(i);
+                    break;
+                }else {
+                    for (int i2 = i; i2 < orls.size(); i2++) {
+                        if (orls.get(i2).getCurrent().getBoundingRectangle().overlaps(body)) {
+                              get = orls.get(i2);
+                        }
+                    }
                 }
             }
         }
         return get;
     }
     public orl getCollideOrlLeft(ArrayList<orl> orls){
-        orl get = new orl();
-        for(int i = 0;i<orls.size();i++){
-            if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
-                if(orls.get(i).getCurrent().getBoundingRectangle().getX()+orls.get(i).getCurrent().getBoundingRectangle().getWidth()<body.getX()) {
-                    get = orls.get(i);
+        for(int i = 0;i<orls.size();i++) {
+            Rectangle orl = orls.get(i).getRect();
+            if (orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)) {
+                if(orl.getY()+orl.getHeight()>body.getY()+body.getHeight()/2) {
+                    return orls.get(i);
                 }
             }
         }
-        return get;
+        return new orl();
     }
 }
