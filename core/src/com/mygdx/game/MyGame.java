@@ -16,10 +16,10 @@ import java.util.ArrayList;
 public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    String status = "shop";
+    String status = "game";
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
-    Toolbox C = new Toolbox();
+    otherObject B = new otherObject();
     Player role = new Player();
     float x = 641;
     float y = 477;
@@ -36,10 +36,6 @@ public class MyGame extends ApplicationAdapter {
     float gasLine = 0;
     float timer1 = 0;
     public void world(){
-
-
-    public void createWorld(){
-        C=new Toolbox();
         A = new loadingClass("a");
         role = A.getRole();
         orl dirt = A.getDirt();
@@ -49,12 +45,8 @@ public class MyGame extends ApplicationAdapter {
         orl copper = A.getCopper();
         orl crystal = A.getCrystal();
         A.getShopRect().setPosition(640,478);
-
-        A.getItemBar().setPosition(440,820);
-
-
         orl Wall = A.getWall();
-
+        B = new otherObject();
         int monster = 0;
         ArrayList<orl> fakeOrl = new ArrayList<orl>();
 
@@ -85,6 +77,7 @@ public class MyGame extends ApplicationAdapter {
             copyX++;
         }
 
+        B = new otherObject();
         for(int i = 0;i<3200;i++) {
             int percentCoal = (int) (Math.random() * 3);
             int percentCopper = (int) (Math.random() * 5);
@@ -151,7 +144,6 @@ public class MyGame extends ApplicationAdapter {
         for(int i = 0;i<A.getShopPics().size();i++){
             A.getShopPics().get(i).setPosition(430,478);
         }
-        A.getSkyPic().setPosition(-500,0);
     }
     @Override
     public void create () {
@@ -161,8 +153,6 @@ public class MyGame extends ApplicationAdapter {
         font.getData().setScale(2f);
         font.setColor(140,140,55,2);
         world();
-        font.setColor(140,140,60,1);
-        createWorld();
     }
 
     @Override
@@ -221,92 +211,12 @@ public class MyGame extends ApplicationAdapter {
             }
         }
         else if(status.equals("shop")){
-
-
             if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
                 status = "game";
                 role.setPosition(541,477);
             }
             else{
-                A.getMouse().setPosition(C.getMouseX(),954-48-C.getMouseY());
-                A.getFirstAid().setPosition(305,453);
-                A.getOxygenCapsule().setPosition(462,453);
-                A.getSmallBomb().setPosition(610,448);
-                A.getBigBomb().setPosition(780,452);
-                A.getReviveKit().setPosition(942,450);
 
-                A.getShopPage().setPosition(0,0);
-                A.getShopPage().draw(batch);
-                if(A.getMouse().getBoundingRectangle().overlaps(A.getFirstAid().getBoundingRectangle())){
-                    A.getFirstAid().draw(batch);
-                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-
-                        if(role.getMoney()>2000 || role.getMoney()==2000){
-                            A.aidNum+=1;
-                            role.Money-=2000;
-                        }
-                        C.wait(300);
-                    }
-
-                }else if(A.getMouse().getBoundingRectangle().overlaps(A.getOxygenCapsule().getBoundingRectangle())){
-                    A.getOxygenCapsule().draw(batch);
-                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-
-                        if(role.getMoney()>4000 || role.getMoney()==4000){
-                            A.oxyNum+=1;
-                            role.Money-=4000;
-                        }
-                        C.wait(300);
-                    }
-
-                }
-                else if(A.getMouse().getBoundingRectangle().overlaps(A.getSmallBomb().getBoundingRectangle())){
-                    A.getSmallBomb().draw(batch);
-                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-
-                        if(role.getMoney()>200 || role.getMoney()==200){
-                            A.smallBombNum+=1;
-                            role.Money-=200;
-                        }
-                        C.wait(300);
-                    }
-
-                }
-                else if(A.getMouse().getBoundingRectangle().overlaps(A.getBigBomb().getBoundingRectangle())){
-                    A.getBigBomb().draw(batch);
-                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-
-                        if(role.getMoney()>1000 || role.getMoney()==1000){
-                            A.bigBombNum+=1;
-                            role.Money-=1000;
-                        }
-                        C.wait(300);
-                    }
-
-                }
-                else if(A.getMouse().getBoundingRectangle().overlaps(A.getReviveKit().getBoundingRectangle())){
-                    A.getReviveKit().draw(batch);
-                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-                        if(role.getMoney()>5000 || role.getMoney()==5000){
-                            A.reviveNum+=1;
-                            role.Money-=5000;
-                        }
-                    }
-
-                }
-
-
-
-                font.draw(batch,"Click ESC to Exit",550,100);
-                font.draw(batch,"Money:  "+Integer.toString(role.getMoney()),10,900);
-                font.draw(batch,Integer.toString(A.aidNum),492,820);
-                font.draw(batch,Integer.toString(A.oxyNum),560,820);
-                font.draw(batch,Integer.toString(A.smallBombNum),630,820);
-                font.draw(batch,Integer.toString(A.bigBombNum),700,820);
-                font.draw(batch,Integer.toString(A.reviveNum),770,820);
-
-                A.getItemBar().draw(batch);
-                A.getMouse().draw(batch);
             }
         }
 
@@ -484,12 +394,6 @@ public class MyGame extends ApplicationAdapter {
                     moveWorld(0,constantY);
                 }
             }
-            if(role.getBody().overlaps(A.getShopRect().getBoundingRectangle())){
-                if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
-                    status = "shop";
-                }
-
-            }
 
 
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
@@ -499,19 +403,17 @@ public class MyGame extends ApplicationAdapter {
                 role.getCollideOrl(orls).pickUp();
                 role.getOrl(role.getCollideOrl(orls));
             }
-
-            //start drawing
-
-
-            A.getSkyPic().draw(batch);
             for(int i = 0;i<A.getBackList().size();i++){
                 A.getBackList().get(i).draw(batch);
             }
             A.getShopPics().get(shopCounter/4).draw(batch);
 
-         }
+            if(role.getBody().overlaps(A.getShopRect().getBoundingRectangle())){
+                if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                    status = "shop";
+                }
 
-
+            }
             for(int i =0;i<orls.size();i++) {
                 if(orls.get(i).Appear) {
                     if(orls.get(i).getCurrent().getX()>-100&&orls.get(i).getCurrent().getX()<1300) {
@@ -535,16 +437,7 @@ public class MyGame extends ApplicationAdapter {
             font.draw(batch, "your health: "+role.getHealth(), 10, 700);
             font.draw(batch, "your Oxigen: "+role.getOxygen(), 10, 800);
 
-            monsters.get(0).getCurrent().draw(batch);
         }
-        font.draw(batch,"Money:  "+Integer.toString(role.getMoney()),10,900);
-        font.draw(batch,Integer.toString(A.aidNum),492,820);
-        font.draw(batch,Integer.toString(A.oxyNum),560,820);
-        font.draw(batch,Integer.toString(A.smallBombNum),630,820);
-        font.draw(batch,Integer.toString(A.bigBombNum),700,820);
-        font.draw(batch,Integer.toString(A.reviveNum),770,820);
-
-        A.getItemBar().draw(batch);
         batch.end();
     }
     @Override
@@ -571,9 +464,6 @@ public class MyGame extends ApplicationAdapter {
             monsters.get(i).getCurrent().translateX(x);
             monsters.get(i).getCurrent().translateY(y);
         }
-
-        A.getSkyPic().translateX(x);
-        A.getSkyPic().translateY(y);
 
 
 

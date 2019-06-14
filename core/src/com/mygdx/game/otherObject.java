@@ -1,12 +1,11 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
 
-class otherObject extends ApplicationAdapter {
+public class otherObject {
     Sprite itemBar;
     Sprite oxygenCapsule;
     Sprite smallBomb;
@@ -18,8 +17,6 @@ class otherObject extends ApplicationAdapter {
     int bigBombNum;
     int aidNum;
     int reviveNum;
-    ArrayList<Sprite> smallBombUse = new ArrayList<Sprite>();
-    ArrayList<Sprite> bigBombUse = new ArrayList<Sprite>();
 
     public int getAidNum() {
         return aidNum;
@@ -65,13 +62,15 @@ class otherObject extends ApplicationAdapter {
         return smallBomb;
     }
 
-    public otherObject(){
+    public void otherObject(){
         oxyNum = 0;
         smallBombNum = 0;
         bigBombNum = 0;
         aidNum = 0;;
         reviveNum = 0;
 
+        ArrayList<Sprite> smallBombUse = new ArrayList<Sprite>();
+        ArrayList<Sprite> bigBombUse = new ArrayList<Sprite>();
         itemBar = new Sprite(new Texture("pics/itemBar.png"));
         oxygenCapsule = new Sprite(new Texture("pics/oxygenCapsule.png"));
         smallBomb = new Sprite(new Texture("pics/smallBomb.png"));
@@ -87,6 +86,8 @@ class otherObject extends ApplicationAdapter {
             bigBombUse.add(new Sprite(new Texture("pics/ex"+Integer.toString(i+1)+".png")));
         }
     }
+    public void otherObject(String a){
 
+    }
 
 }

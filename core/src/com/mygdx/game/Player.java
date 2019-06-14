@@ -44,7 +44,7 @@ class Player {
         this.flyRight = flyRight;
         this.roleDig = roleDig;
         name = "role";
-        Money = 20000;
+        Money = 0;
         health = 100;
         oxygen = 100;
         body = Current.getBoundingRectangle();
