@@ -53,6 +53,7 @@ class loadingClass extends ApplicationAdapter {
         ArrayList<Sprite> roleJetLeft = new ArrayList<Sprite>();
         ArrayList<Sprite> roleJetRight = new ArrayList<Sprite>();
         ArrayList<Sprite> roleJet = new ArrayList<Sprite>();
+        ArrayList<Sprite> roleDig = new ArrayList<Sprite>();
 
         walkL.add(new Sprite(new Texture("pics/roleWalkLeft1.png")));
         walkL.add(new Sprite(new Texture("pics/roleWalkLeft2.png")));
@@ -68,8 +69,11 @@ class loadingClass extends ApplicationAdapter {
         roleJetRight.add(new Sprite(new Texture("pics/roleJetRight2.png")));
         roleJet.add(new Sprite(new Texture("pics/roleJet1.png")));
         roleJet.add(new Sprite(new Texture("pics/roleJet2.png")));
+        roleDig.add(new Sprite(new Texture("pics/roleDigDownBlue.png")));
+        roleDig.add(new Sprite(new Texture("pics/roleDigLeftBlue.png")));
+        roleDig.add(new Sprite(new Texture("pics/roleDigRightBlue.png")));
 
-        role = new Player(roleStatic, walkL,roleJet,roleJetRight,roleJetLeft,walkR,roleTakeDamage);
+        role = new Player(roleStatic, walkL,roleJet,roleJetRight,roleJetLeft,walkR,roleTakeDamage,roleDig);
     }
     public orl getCoal(){return  coal;}
     public orl getDirt(){return dirt;}

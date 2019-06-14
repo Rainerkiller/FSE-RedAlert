@@ -24,7 +24,7 @@ public class MyGame extends ApplicationAdapter {
     float x = 641;
     float y = 477;
     float constantX=5;
-    float constantY=5;
+    float constantY=10;
     ArrayList<Sprite>sprites = new ArrayList<Sprite>();
     BitmapFont font;
     Rectangle worldRect = new Rectangle(541,327,200,300);
@@ -150,17 +150,22 @@ public class MyGame extends ApplicationAdapter {
             if(role.getBody().overlaps(worldRect)) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     // use translate(vx,vy), translateX(vx) or translateY(vy)
-                    role.setPosition("up");
-                    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                        role.setPosition("upLeft");
-                    } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                        role.setPosition("upRight");
+                    if(!role.getCollideUp(orls)) {
+                        role.setPosition("up");
+                        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                            role.setPosition("left");
+                        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                            role.setPosition("right");
+                        }
+                    } else if(role.getCollideUp(orls)){
+                        role.setPosition("fakeUp");
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 
                     if (role.getCollideLeft(orls)) {
                         if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
                             orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
+                            role.digLeft();
                         }
                     } else if (!role.getCollide(orls)) {
                         role.setPosition("left");
@@ -170,13 +175,24 @@ public class MyGame extends ApplicationAdapter {
 
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    role.setPosition("right");
-                    if (!role.getCollide(orls)) {
+                    if (role.getCollideLeft(orls)) {
+                        if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
+                            orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
+                            role.digRight();
+                        }
+                    }
+                    else if (!role.getCollide(orls)) {
+                        role.setPosition("right");
                         role.setPosition("acc");
                     }
-                } else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
+                    if (!role.getCollideLeft(orls)) {
+                        role.setPosition("right");
+                    }
+                }
+                else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
                     if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
                         orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
+                        role.digDown();
                     }
                 } else if (role.getCollide(orls)) {
                     role.setPosition("static");
@@ -185,40 +201,46 @@ public class MyGame extends ApplicationAdapter {
                 }
             }else {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                    role.setPosition("up");
-                    moveWorld(0,-constantY);
-                    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                        role.setPosition("upLeft");
-                        moveWorld(constantX,-constantY);
-                    } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                        role.setPosition("upRight");
-                        moveWorld(-constantX,-constantY);
+                    if(!role.getCollideUp(orls)) {
+                        moveWorld(0,-constantY);
+                        role.setPosition("fakeUp");
+                        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                            role.setPosition("fakeUpLeft");
+                            moveWorld(constantX,-constantY);
+                        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                            role.setPosition("fakeUpRight");
+                            moveWorld(-constantX,-constantY);
+
+                        }
+                    } else if(role.getCollideUp(orls)) {
+                        role.setPosition("up");
                     }
+
                 } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                    System.out.println(role.getCollideLeft(orls));
 
                     if (role.getCollideLeft(orls)) {
                         if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
                             orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
+                            role.digLeft();
                         }
                     } else if (!role.getCollide(orls)) {
-                        role.setPosition("left");
-                        role.setPosition("acc");
+                        role.setPosition("fakeLeft");
+                        role.setPosition("fakeAcc");
                         moveWorld(constantX,0);
                         role.setPosition("fakeAcc");
-                        moveWorld(0,role.getSpeed());
+                        moveWorld(0,constantY);
                     } else {
                         moveWorld(constantX,0);
-                        role.setPosition("left");
+                        role.setPosition("fakeLeft");
 
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    role.setPosition("right");
+                    role.setPosition("fakeRight");
                     moveWorld(-constantX,0);
                     if (!role.getCollide(orls)) {
                         role.setPosition("acc");
                         role.setPosition("fakeAcc");
-                        moveWorld(0,role.getSpeed());
+                        moveWorld(0,constantY);
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
                     if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
@@ -229,7 +251,7 @@ public class MyGame extends ApplicationAdapter {
                 } else {
                     role.setPosition("fakeAcc");
                     role.setPosition("acc");
-                    moveWorld(0,role.getSpeed());
+                    moveWorld(0,constantY);
                 }
             }
 
