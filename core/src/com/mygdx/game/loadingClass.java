@@ -1,5 +1,4 @@
 package com.mygdx.game;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,6 +18,7 @@ class loadingClass extends ApplicationAdapter {
     ArrayList<Sprite> backgroundPics = new ArrayList<Sprite>();
     ArrayList<Sprite> shopPics = new ArrayList<Sprite>();
     Sprite shopRect;
+<<<<<<< HEAD
     Sprite skyPic;
     Sprite shopPage;
 
@@ -40,6 +40,9 @@ class loadingClass extends ApplicationAdapter {
 
 
 
+=======
+    orl Wall;
+>>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
 
 
     orl diamond;
@@ -58,9 +61,25 @@ class loadingClass extends ApplicationAdapter {
         loadSky();
         loadShopPage();
         loadShopRect();
+<<<<<<< HEAD
         loadOtherObjects();
 
+=======
+        loadWall();
+    }
+    public orl getWall(){
+        return Wall;
+    }
+    public void loadWall(){
+        ArrayList<Sprite> picture = new ArrayList<Sprite>();
+        ArrayList<Sprite> orl = new ArrayList<Sprite>();
+>>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
 
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+        }
+        orl.add(new Sprite(new Texture("pics/hardRock.png")));
+        Wall = new orl("wall", 0,picture,new Sprite(new Texture("pics/hardRock.png")),orl,false);
     }
     public void loadOtherObjects(){
         oxyNum = 0;
@@ -69,6 +88,7 @@ class loadingClass extends ApplicationAdapter {
         aidNum = 0;;
         reviveNum = 0;
 
+<<<<<<< HEAD
         itemBar = new Sprite(new Texture("pics/itemBar.png"));
         oxygenCapsule = new Sprite(new Texture("pics/oxygenCapsule.png"));
         smallBomb = new Sprite(new Texture("pics/smallBomb.png"));
@@ -93,6 +113,9 @@ class loadingClass extends ApplicationAdapter {
     public void loadSky(){
         skyPic = new Sprite(new Texture(Gdx.files.internal("pics/background.png")));
     }
+=======
+
+>>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
     public void loadShopRect(){
         shopRect = new Sprite(new Texture(Gdx.files.internal("pics/earth1.png")));
     }

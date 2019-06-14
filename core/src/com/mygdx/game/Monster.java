@@ -12,6 +12,7 @@ class Monster {
     int damage;
     Sprite current;
     ArrayList <Sprite>motion;
+    float currentX,currentY;
     public Monster(){
         health = 0;
     }
@@ -19,13 +20,20 @@ class Monster {
         health = goblin.getHealth();
         damage = goblin.getDamage();
         current = new Sprite(goblin.getCurrent());
-        body = current.getBoundingRectangle();
+        body = goblin.getBody();
     }
     public Monster(int hp,int damage, Sprite current){
         health = hp;
         this.damage = damage;
         this.current = current;
         body = current.getBoundingRectangle();
+        body.setX(body.getX()+10);
+        body.setY(body.getY()-5);
+        body.setHeight(76);
+        body.setWidth(50);
+    }
+    public Rectangle getBody(){
+        return body;
     }
     public int getHealth(){
         return health;
@@ -45,9 +53,21 @@ class Monster {
     }
     public void Moving(String direction){
         if(direction.equals("left")){
-            setPostion(-5,0);
+            currentX-=0.1;
         }else if(direction.equals("right")){
-            setPostion(5,0);
+            currentX+=0.1;
         }
+        refreshPosition();
+    }
+    public void refreshPosition(){
+        current.translateX(currentX);
+        body = current.getBoundingRectangle();
+        body.setX(body.getX()+10);
+        body.setY(body.getY()-5);
+        body.setHeight(76);
+        body.setWidth(50);
+    }
+    public void takeDamage(int damage){
+        health -= damage;
     }
 }

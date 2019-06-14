@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyGame extends ApplicationAdapter {
@@ -47,32 +47,95 @@ public class MyGame extends ApplicationAdapter {
         orl copper = A.getCopper();
         orl crystal = A.getCrystal();
         A.getShopRect().setPosition(640,478);
+<<<<<<< HEAD
         A.getItemBar().setPosition(440,820);
 
+=======
+        orl Wall = A.getWall();
+        B = new otherObject();
+>>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
         int monster = 0;
-        for(int i = 0;i<3000;i++) {
+        ArrayList<orl> fakeOrl = new ArrayList<orl>();
+
+        float copyX = -152;
+        float copyY = y;
+
+        for(int i =0;i<8;i++){
+            orl copy = new orl(Wall);
+            copy.setPostion(copyX+(7+i)*76,copyY-76);
+            fakeOrl.add(copy);
+        }
+         copyX = -152;
+         copyY = y;
+        for(int i = 0; i < 200;i++){
+            orl copy = new orl(Wall);
+            orl copy2 = new orl(Wall);
+            copy.setPostion(copyX,copyY+76*100);
+            copy2.setPostion(copyX+33*76,copyY+76*100);
+            fakeOrl.add(copy);
+            fakeOrl.add(copy2);
+            copyY-=76;
+        }
+        copyX = -152;
+        copyY = y;
+        for(int i = 0; i<30;i++){
+            orl copy = new orl(Wall);
+            copy.setPostion(copyX,copyY-76*101);
+            copyX++;
+        }
+
+        B = new otherObject();
+        for(int i = 0;i<3200;i++) {
             int percentCoal = (int) (Math.random() * 3);
             int percentCopper = (int) (Math.random() * 5);
             int percentGold = (int) (Math.random() * 10);
             int percentCrystal = (int) (Math.random() * 50);
             int percentSmallGoblin = (int) (Math.random() * 200);
-            if (percentSmallGoblin == 1) {
-                Monster smallGoblin = A.getSmallGoblin();
+            if (percentSmallGoblin == 1 && i > 64) {
+                Monster smallGoblin = new Monster(A.getSmallGoblin());
                 smallGoblin.setPostion(x, y);
-                monsters.add(new Monster(smallGoblin));
-                monster++;
-                i += 7;
-            } else if (percentCrystal == 1) {
-                orls.add(new orl(crystal));
-            } else if (percentGold == 1) {
-                orls.add(new orl(gold));
-            } else if (percentCopper == 1) {
-                orls.add(new orl(copper));
-            } else if (percentCoal == 1) {
-                orls.add(new orl(coal));
-            } else {
-                orls.add(new orl(dirt));
+                monsters.add(smallGoblin);
             }
+
+
+
+                 if (percentCrystal == 1) {
+                    orls.add(new orl(crystal));
+                } else if (percentGold == 1) {
+                    orls.add(new orl(gold));
+                } else if (percentCopper == 1) {
+                    orls.add(new orl(copper));
+                } else if (percentCoal == 1) {
+                    orls.add(new orl(coal));
+                } else {
+                    orls.add(new orl(dirt));
+                }
+                orls.get(i).setPostion(x, y);
+                x = x + 76;
+                if (i % 32 == 0) {
+                    x = -76;
+                    y -= 76;
+                }
+        }
+        orls.remove(0);//remove the very first blok that was for test purpose
+        ArrayList<orl> collideToMonster = new ArrayList<orl>();
+
+        for(int i = 0; i<orls.size();i++){
+            for(int k = 0;k < monsters.size();k++){
+                if(orls.get(i).getRect().overlaps(monsters.get(k).getCurrent().getBoundingRectangle())){
+                    collideToMonster.add(orls.get(i));
+                }
+            }
+        }
+        for(orl orl:collideToMonster){
+            orls.remove(orl);
+        }
+        for (orl orl : fakeOrl){
+            orls.add(new orl(orl));
+        }
+        int loadCounter = 0;
+        for(int i = 0;i<A.getBackList().size();i++){
+            A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/3+1));
             orls.get(i - 8 * monster).setPostion(x, y);
             x = x + 76;
             if (i % 30 == 0) {
@@ -81,7 +144,6 @@ public class MyGame extends ApplicationAdapter {
             }
         }
         orls.remove(0);//remove the very first blok that was for test purpose
-        int loadCounter = 0;
         for(int i = 0;i<A.getBackList().size();i++){
             A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/3+1));
 
@@ -440,7 +502,7 @@ public class MyGame extends ApplicationAdapter {
                 if(orls.get(i).Appear) {
                     if(orls.get(i).getCurrent().getX()>-100&&orls.get(i).getCurrent().getX()<1300) {
                         if (orls.get(i).getCurrent().getY() > -100 && orls.get(i).getCurrent().getY() < 1000) {
-                                orls.get(i).getCurrent().draw(batch);
+                            orls.get(i).getCurrent().draw(batch);
                         }
                     }
                 }else{
@@ -454,11 +516,13 @@ public class MyGame extends ApplicationAdapter {
                     }
                 }
             }
-            System.out.println(monsters.size());
             role.getCurrent().draw(batch);
             monsters.get(0).getCurrent().draw(batch);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
         batch.end();
     }
     @Override
@@ -481,6 +545,10 @@ public class MyGame extends ApplicationAdapter {
         }
         A.getShopRect().translateX(x);
         A.getShopRect().translateY(y);
+        for(int i = 0;i<monsters.size();i++){
+            monsters.get(i).getCurrent().translateX(x);
+            monsters.get(i).getCurrent().translateY(y);
+        }
 
         A.getSkyPic().translateX(x);
         A.getSkyPic().translateY(y);

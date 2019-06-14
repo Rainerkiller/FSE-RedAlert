@@ -13,18 +13,28 @@ class orl {
     int price;
     boolean Appear = true;
     boolean orl = false;
+    boolean destroy = true;
     Sprite Current;
     ArrayList<Sprite> Pic = new ArrayList<Sprite>();
     ArrayList<Sprite> inPiece = new ArrayList<Sprite>();
-    public orl(String name,int p, ArrayList<Sprite> load, Sprite current,ArrayList<Sprite>orl){
+    public orl(String name,int p, ArrayList<Sprite> load, Sprite current,ArrayList<Sprite>orl ){
         this.name = name;
         Current = current;
         price = p;
         inPiece = load;
         Pic = orl;
+        this.destroy = true;
         setPostion(0,0);
     }
-
+    public orl(String name,int p, ArrayList<Sprite> load, Sprite current,ArrayList<Sprite>orl, boolean status ){
+        this.name = name;
+        Current = current;
+        price = p;
+        inPiece = load;
+        Pic = orl;
+        this.destroy = status;
+        setPostion(0,0);
+    }
     public orl(String name,int p, ArrayList<Sprite> load, Sprite current){
         this.name = name;
         Current = current;
@@ -36,6 +46,8 @@ class orl {
 
     }
     public orl(orl orls){
+        float x = orls.getCurrent().getX();
+        float y = orls.getCurrent().getY();
         name = (orls.getName());
         Current = new Sprite(orls.getCurrent());
         price = orls.getPrice();
@@ -45,7 +57,7 @@ class orl {
         for(Sprite copy2 : orls.getPic()){
             Pic.add(new Sprite(copy2));
         }
-        setPostion(0,0);
+        setPostion(x,y);
     }
     public ArrayList<Sprite> getPic(){return  Pic;}
     public ArrayList<Sprite> getInDirty(){
@@ -78,12 +90,12 @@ class orl {
     public void mining(){
         float x = Current.getX();
         float y = Current.getY();
-        if(percentage>0) {
+        if(percentage>0 && !name.equals("wall")) {
             percentage -= 5;
         }else if(name.equals("dirt")){
             Appear = false;
         }
-         if(percentage<5&&!name.equals("dirt")){
+        if(percentage<5&&!name.equals("dirt")&&!name.equals("wall")){
              getPic().get(1).setPosition(Current.getX()+20,Current.getY()+20);
              Current = new Sprite(getPic().get(1));
              orl = true;
@@ -101,8 +113,6 @@ class orl {
         }else if(percentage<70){
 
             Current = new Sprite(getInDirty().get(1));
-        }else if(percentage<85){
-            Current = new Sprite(getInDirty().get(0));
         }
     }
     public void setPostion(float x,float y){
