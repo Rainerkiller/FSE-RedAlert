@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    String status = "shop";
+    String status = "menu";
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
     Toolbox C = new Toolbox();
@@ -35,6 +35,7 @@ public class MyGame extends ApplicationAdapter {
     int shopCounter = 0;
     float gasLine = 0;
     float timer1 = 0;
+    Boolean guideS = false;
     ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 
 
@@ -173,11 +174,12 @@ public class MyGame extends ApplicationAdapter {
 
         batch.begin();
         new Sprite(img).draw(batch);
-
+        //start up menu
         if(status.equals("startUp")){
 
             Sprite cover = new Sprite(new Texture("pics/cover.png"));
             cover.setPosition(0,0);
+            //for blinking text
             if(startUpTimer > 10 && startUpTimer < 20){
                 cover.draw(batch);
                 startUpTimer += 1;
@@ -192,60 +194,80 @@ public class MyGame extends ApplicationAdapter {
                 font.draw(batch, "Press any button to start.", 480, 100);
                 startUpTimer+=1;
             }
-            if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)){
+            if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)){//if user press any key, go to menu
                 status = "menu";
             }
         }
         else if(status.equals("menu")){
+            //load pics
             Sprite menuStartGame = new Sprite(new Texture("pics/menuStartGame.png"));
             Sprite menuGuide = new Sprite(new Texture("pics/menuGuide.png"));
-            menuStartGame.setPosition(0,0);
+            menuStartGame.setPosition(0,0);//set location for both buttons
             menuGuide.setPosition(0,0);
-            if(menuSelection == 0){
+            if(menuSelection == 0){//now selecting start game
                 menuStartGame.draw(batch);
-                if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){
+                if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN)){//go down, select guide
                     menuSelection = 1;
                 }
                 else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
 
-                    status = "loading";
+                    status = "loading";//go to loading
                 }
             }
-            else if(menuSelection == 1){
+            else if(menuSelection == 1){//guide
                 menuGuide.draw((batch));
                 if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-                    menuSelection = 0;
+                    menuSelection = 0;//go back to start game
                 }
-                //enter guide
+                else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+                    guideS = true;//user pressed enter, show guide
+
+                }
+            }
+            if(guideS){
+                Sprite guidePic = new Sprite(new Texture(Gdx.files.internal("pics/guideText.png")));
+                guidePic.setPosition(20,20);
+                guidePic.draw(batch);
+                if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+                    guideS=false;//user want to close
+                }
+                else{
+                    guidePic.draw(batch);//show the guide
+                }
+
             }
         }
+        //this is the shop
         else if(status.equals("shop")){
 
-            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){//quit to game
                 status = "game";
-                role.setPosition(541,477);
+                role.setPosition(541,477);//reset position
             }
             else{
-                A.getMouse().setPosition(C.getMouseX(),954-48-C.getMouseY());
+
+                A.getMouse().setPosition(C.getMouseX(),954-48-C.getMouseY());//get cursor location
+                //set pic location
                 A.getFirstAid().setPosition(305,453);
                 A.getOxygenCapsule().setPosition(462,453);
                 A.getSmallBomb().setPosition(610,448);
                 A.getBigBomb().setPosition(780,452);
                 A.getReviveKit().setPosition(942,450);
 
-                A.getShopPage().setPosition(0,0);
-                A.getShopPage().draw(batch);
-                if(A.getMouse().getBoundingRectangle().overlaps(A.getFirstAid().getBoundingRectangle())){
-                    A.getFirstAid().draw(batch);
-                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+                A.getShopPage().setPosition(0,0);//background
+                A.getShopPage().draw(batch);//draw
 
-                        if(role.getMoney()>2000 || role.getMoney()==2000){
-                            A.aidNum+=1;
-                            role.Money-=2000;
+                if(A.getMouse().getBoundingRectangle().overlaps(A.getFirstAid().getBoundingRectangle())){//check collision
+                    A.getFirstAid().draw(batch);//light up
+                    if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {//left click
+
+                        if (role.getMoney() > 2000 || role.getMoney() == 2000) {//if enough money
+                            A.aidNum += 1;//get one
+                            role.Money -= 2000;//take money
                         }
-                        C.wait(300);
+                        C.wait(300);//pressing preventing
                     }
-
+                    //same here
                 }else if(A.getMouse().getBoundingRectangle().overlaps(A.getOxygenCapsule().getBoundingRectangle())){
                     A.getOxygenCapsule().draw(batch);
                     if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
@@ -294,23 +316,23 @@ public class MyGame extends ApplicationAdapter {
                 }
 
 
-
+                //words
                 font.draw(batch,"Click ESC to Exit",550,100);
                 font.draw(batch,"Money:  "+Integer.toString(role.getMoney()),10,900);
-                font.draw(batch,Integer.toString(A.aidNum),492,820);
+                font.draw(batch,Integer.toString(A.aidNum),492,820);//num of items
                 font.draw(batch,Integer.toString(A.oxyNum),560,820);
                 font.draw(batch,Integer.toString(A.smallBombNum),630,820);
                 font.draw(batch,Integer.toString(A.bigBombNum),700,820);
                 font.draw(batch,Integer.toString(A.reviveNum),770,820);
 
-                A.getItemBar().draw(batch);
-                A.getMouse().draw(batch);
+                A.getItemBar().draw(batch);//draw bar
+                A.getMouse().draw(batch);//draw cursor
             }
         }
 
 
 
-
+        //for loading files
         else if(status.equals("loading")){
             ArrayList<Sprite> loadingBar = new ArrayList<Sprite>();
             for(int i = 0; i<5;i++){
@@ -318,45 +340,54 @@ public class MyGame extends ApplicationAdapter {
                 pic.setPosition(0,0);
                 loadingBar.add(pic);
             }
+            //for sprite
             if(loadingCounter%5==0){
                 loadingBar.get(spriteIndex).draw(batch);
                 spriteIndex += 1;
 
             }
             else if((loadingCounter-1)%20==0){
-                spriteIndex = 0;
+                spriteIndex = 0;//reset
                 loadingBar.get(spriteIndex).draw(batch);
             }
 
             else{
                 loadingBar.get(spriteIndex).draw(batch);
             }
-            if(loadingCounter == 10){
-                status = "game";
+            if(loadingCounter == 20){
+                status = "game";//loading end
             }
 
             loadingCounter += 1;
 
         }
 
-
+        //game part
         else if(status.equals("game")) {
+
             timer1+=5;
             if (gasLine<-1000){
-                role.loseOxygen();
+                role.loseOxygen();//if under 1000, lose oxygen
             }
             if(role.getOxygen()<0){
-                role.loseHealth();
+                role.loseHealth();//oxygen hits 0, lose health
                 role.setPosition("damage");
             }
             if(role.getCollideMonster(monsters)){
                 role.setPosition("takeFakeDamage");
             }
+            //
             if(Gdx.input.isKeyPressed(Input.Keys.A)){
-                role.useHealth();
+                if(A.aidNum>0){
+                    role.useHealth();
+                    A.aidNum-=1;
+                }
             }
             if(Gdx.input.isKeyPressed(Input.Keys.S)){
-                role.useOxygen();
+                if(A.oxyNum>0){
+                    role.useOxygen();
+                    A.oxyNum-=1;
+                }
             }
 
 
@@ -547,14 +578,21 @@ public class MyGame extends ApplicationAdapter {
                     ok.booming();
             }
             role.getCurrent().draw(batch);
-            font.draw(batch, "your money: "+role.getMoney(), 10, 900);
-            font.draw(batch, "your health: "+role.getHealth(), 10, 700);
-            font.draw(batch, "your Oxigen: "+role.getOxygen(), 10, 800);
+            font.draw(batch, "Your money: "+role.getMoney(), 10, 900);
+            font.draw(batch, "Your health: "+role.getHealth(), 10, 700);
+            font.draw(batch, "Your Oxygen: "+role.getOxygen(), 10, 800);
+            font.draw(batch,Integer.toString(A.aidNum),492,820);//num of items
+            font.draw(batch,Integer.toString(A.oxyNum),560,820);
+            font.draw(batch,Integer.toString(A.smallBombNum),630,820);
+            font.draw(batch,Integer.toString(A.bigBombNum),700,820);
+            font.draw(batch,Integer.toString(A.reviveNum),770,820);
 
          }
 
+        if(status.equals("game")||status.equals("shop")){
+            A.getItemBar().draw(batch);
+        }
 
-        A.getItemBar().draw(batch);
         batch.end();
     }
     @Override
