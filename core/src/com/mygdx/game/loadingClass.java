@@ -1,5 +1,4 @@
 package com.mygdx.game;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,16 +15,44 @@ class loadingClass extends ApplicationAdapter {
     orl crystal;
     float x =0;
     float y = 100;
-    Sprite back;
+    ArrayList<Sprite> backgroundPics = new ArrayList<Sprite>();
+    ArrayList<Sprite> shopPics = new ArrayList<Sprite>();
+    Sprite shopRect;
+    orl Wall;
     Monster smallGoblin;
     public loadingClass(){
 
     }
+
     public loadingClass(String a){
         loadDirt();
         loadRole();
         loadCoal();
         loadBack();
+        loadShop();
+        loadShopRect();
+        loadWall();
+    }
+    public orl getWall(){
+        return Wall;
+    }
+    public void loadWall(){
+        ArrayList<Sprite> picture = new ArrayList<Sprite>();
+        ArrayList<Sprite> orl = new ArrayList<Sprite>();
+
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+        }
+        orl.add(new Sprite(new Texture("pics/hardRock.png")));
+        Wall = new orl("wall", 0,picture,new Sprite(new Texture("pics/hardRock.png")),orl,false);
+    }
+    public void loadShopRect(){
+        shopRect = new Sprite(new Texture(Gdx.files.internal("pics/earth1.png")));
+    }
+    public void loadShop(){
+        for(int i = 0; i<3;i++){
+            shopPics.add(new Sprite(new Texture(Gdx.files.internal("pics/shop"+Integer.toString(i+1)+".png"))));
+        }
         loadCopper();
         loadCrystal();
         loadGold();
@@ -39,7 +66,10 @@ class loadingClass extends ApplicationAdapter {
         smallGoblin = new Monster(500,50,sprite);
     }
     public void loadBack(){
-        back = new Sprite(new Texture(Gdx.files.internal("pics/earthScreen.png")));
+        for(int i = 0; i<24;i++){
+            backgroundPics.add(new Sprite(new Texture(Gdx.files.internal("pics/earthScreen.png"))));
+        }
+
     }
 
     public void loadDirt(){
@@ -124,7 +154,14 @@ class loadingClass extends ApplicationAdapter {
     public Player getRole(){
         return role;
     }
-    public Sprite getBack(){return back;}
+    public ArrayList<Sprite> getBackList(){return backgroundPics;}
+
+    public ArrayList<Sprite> getShopPics() {
+        return shopPics;
+    }
+    public Sprite getShopRect(){
+        return shopRect;
+    }
     public orl getGold(){return  gold;}
     public orl getCopper(){return copper;}
     public orl getCrystal(){return crystal;}

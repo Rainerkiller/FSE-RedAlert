@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MyGame extends ApplicationAdapter {
@@ -33,6 +33,8 @@ public class MyGame extends ApplicationAdapter {
     int menuSelection = 0; //0 for start game, 1 for guide
     int loadingCounter = 0;
     int spriteIndex = 0;
+    int shopCounter = 0;
+
 
     public void world(){
         A = new loadingClass("a");
@@ -43,42 +45,96 @@ public class MyGame extends ApplicationAdapter {
         orl gold = A.getGold();
         orl copper = A.getCopper();
         orl crystal = A.getCrystal();
-        A.back.setPosition(0,-476);
+        A.getShopRect().setPosition(640,478);
+        orl Wall = A.getWall();
         B = new otherObject();
         int monster = 0;
-        for(int i = 0;i<3000;i++){
-            int percentCoal = (int)(Math.random()*3);
-            int percentCopper = (int)(Math.random()*5);
-            int percentGold = (int)(Math.random()*10);
-            int percentCrystal = (int)(Math.random()*50);
-            int percentSmallGoblin =(int)(Math.random()*200);
-            if(percentSmallGoblin == 1){
-                Monster smallGoblin = A.getSmallGoblin();
+        ArrayList<orl> fakeOrl = new ArrayList<orl>();
+
+        float copyX = -152;
+        float copyY = y;
+
+        for(int i =0;i<8;i++){
+            orl copy = new orl(Wall);
+            copy.setPostion(copyX+(7+i)*76,copyY-76);
+            fakeOrl.add(copy);
+        }
+         copyX = -152;
+         copyY = y;
+        for(int i = 0; i < 200;i++){
+            orl copy = new orl(Wall);
+            orl copy2 = new orl(Wall);
+            copy.setPostion(copyX,copyY+76*100);
+            copy2.setPostion(copyX+33*76,copyY+76*100);
+            fakeOrl.add(copy);
+            fakeOrl.add(copy2);
+            copyY-=76;
+        }
+        copyX = -152;
+        copyY = y;
+        for(int i = 0; i<30;i++){
+            orl copy = new orl(Wall);
+            copy.setPostion(copyX,copyY-76*101);
+            copyX++;
+        }
+
+        for(int i = 0;i<3200;i++) {
+            int percentCoal = (int) (Math.random() * 3);
+            int percentCopper = (int) (Math.random() * 5);
+            int percentGold = (int) (Math.random() * 10);
+            int percentCrystal = (int) (Math.random() * 50);
+            int percentSmallGoblin = (int) (Math.random() * 200);
+            if(percentSmallGoblin == 1&&i>64){
+                Monster smallGoblin = new Monster(A.getSmallGoblin());
                 smallGoblin.setPostion(x,y);
-                monsters.add(new Monster(smallGoblin));
-                monster++;
-                i+=7;
+                monsters.add(smallGoblin);
             }
-            else if(percentCrystal == 1){
+
+             if (percentCrystal == 1) {
                 orls.add(new orl(crystal));
-            }
-            else if(percentGold == 1) {
+            } else if (percentGold == 1) {
                 orls.add(new orl(gold));
-            }
-            else if(percentCopper == 1){
+            } else if (percentCopper == 1) {
                 orls.add(new orl(copper));
-            }else if(percentCoal == 1){
+            } else if (percentCoal == 1) {
                 orls.add(new orl(coal));
-            }
-            else{
+            } else {
                 orls.add(new orl(dirt));
             }
-            orls.get(i-8*monster).setPostion(x,y);
-            x = x+76;
-            if(i%30==0){
-                x = 0;
-                y-=76;
+            orls.get(i-monster).setPostion(x, y);
+            x = x + 76;
+            if (i % 32 == 0) {
+                x = -76;
+                y -= 76;
             }
+        }
+        orls.remove(0);//remove the very first blok that was for test purpose
+        ArrayList<orl> collideToMonster = new ArrayList<orl>();
+
+        for(int i = 0; i<orls.size();i++){
+            for(int k = 0;k < monsters.size();k++){
+                if(orls.get(i).getRect().overlaps(monsters.get(k).getCurrent().getBoundingRectangle())){
+                    collideToMonster.add(orls.get(i));
+                }
+            }
+        }
+        for(orl orl:collideToMonster){
+            orls.remove(orl);
+        }
+        for (orl orl : fakeOrl){
+            orls.add(new orl(orl));
+        }
+        int loadCounter = 0;
+        for(int i = 0;i<A.getBackList().size();i++){
+            A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/3+1));
+            if(loadCounter==3) {
+                loadCounter = 0;
+            }else{
+                loadCounter+=1;
+            }
+        }
+        for(int i = 0;i<A.getShopPics().size();i++){
+            A.getShopPics().get(i).setPosition(430,478);
         }
     }
     @Override
@@ -143,6 +199,15 @@ public class MyGame extends ApplicationAdapter {
                 //enter guide
             }
         }
+        else if(status.equals("shop")){
+            if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+                status = "game";
+                role.setPosition(541,477);
+            }
+            else{
+
+            }
+        }
 
 
 
@@ -179,9 +244,11 @@ public class MyGame extends ApplicationAdapter {
         else if(status.equals("game")) {
 
 
-            A.getBack().draw(batch);
-
-
+            if(shopCounter==10){
+                shopCounter=0;
+            }else{
+                shopCounter+=1;
+            }
 
             if(role.getBody().overlaps(worldRect)) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -235,6 +302,7 @@ public class MyGame extends ApplicationAdapter {
                 } else {
                     role.setPosition("acc");
                 }
+
             }else {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     if(!role.getCollideUp(orls)) {
@@ -298,6 +366,7 @@ public class MyGame extends ApplicationAdapter {
                 }
             }
 
+
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
                 status  = "pause";
             }
@@ -305,11 +374,23 @@ public class MyGame extends ApplicationAdapter {
                 role.getCollideOrl(orls).pickUp();
                 role.getOrl(role.getCollideOrl(orls));
             }
+            for(int i = 0;i<A.getBackList().size();i++){
+                A.getBackList().get(i).draw(batch);
+            }
+            A.getShopPics().get(shopCounter/4).draw(batch);
+
+            if(role.getBody().overlaps(A.getShopRect().getBoundingRectangle())){
+                if(Gdx.input.isKeyPressed(Input.Keys.ENTER)){
+                    status = "shop";
+                }
+
+            }
+
             for(int i =0;i<orls.size();i++) {
                 if(orls.get(i).Appear) {
                     if(orls.get(i).getCurrent().getX()>-100&&orls.get(i).getCurrent().getX()<1300) {
                         if (orls.get(i).getCurrent().getY() > -100 && orls.get(i).getCurrent().getY() < 1000) {
-                                orls.get(i).getCurrent().draw(batch);
+                            orls.get(i).getCurrent().draw(batch);
                         }
                     }
                 }else{
@@ -323,10 +404,8 @@ public class MyGame extends ApplicationAdapter {
                     }
                 }
             }
-            System.out.println(monsters.size());
             role.getCurrent().draw(batch);
         }
-        monsters.get(0).getCurrent().draw(batch);
         batch.end();
     }
     @Override
@@ -339,9 +418,19 @@ public class MyGame extends ApplicationAdapter {
             orls.get(i).moveOrl(x,y);
 
         }
-        A.getBack().translateX(x);
-        A.getBack().translateY(y);
-
-
+        for(int i = 0;i<A.getBackList().size();i++){
+            A.getBackList().get(i).translateX(x);
+            A.getBackList().get(i).translateY(y);
+        }
+        for(int i = 0;i<A.getShopPics().size();i++){
+            A.getShopPics().get(i).translateX(x);
+            A.getShopPics().get(i).translateY(y);
+        }
+        A.getShopRect().translateX(x);
+        A.getShopRect().translateY(y);
+        for(int i = 0;i<monsters.size();i++){
+            monsters.get(i).getCurrent().translateX(x);
+            monsters.get(i).getCurrent().translateY(y);
+        }
     }
 }
