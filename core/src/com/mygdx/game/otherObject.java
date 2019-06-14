@@ -18,9 +18,49 @@ public class otherObject {
     int aidNum;
     int reviveNum;
 
+    public int getAidNum() {
+        return aidNum;
+    }
 
+    public int getBigBombNum() {
+        return bigBombNum;
+    }
 
+    public int getOxyNum() {
+        return oxyNum;
+    }
 
+    public int getReviveNum() {
+        return reviveNum;
+    }
+
+    public int getSmallBombNum() {
+        return smallBombNum;
+    }
+
+    public Sprite getBigBomb() {
+        return bigBomb;
+    }
+
+    public Sprite getFirstAid() {
+        return firstAid;
+    }
+
+    public Sprite getItemBar() {
+        return itemBar;
+    }
+
+    public Sprite getOxygenCapsule() {
+        return oxygenCapsule;
+    }
+
+    public Sprite getReviveKit() {
+        return reviveKit;
+    }
+
+    public Sprite getSmallBomb() {
+        return smallBomb;
+    }
 
     public void otherObject(){
         oxyNum = 0;
