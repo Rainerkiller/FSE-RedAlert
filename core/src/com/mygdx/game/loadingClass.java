@@ -3,6 +3,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ class loadingClass extends ApplicationAdapter {
     orl crystal;
     float x =0;
     float y = 100;
+    boolean bombPlnated = false;
     ArrayList<Sprite> backgroundPics = new ArrayList<Sprite>();
     ArrayList<Sprite> shopPics = new ArrayList<Sprite>();
     Sprite shopRect;
@@ -37,16 +39,20 @@ class loadingClass extends ApplicationAdapter {
     int reviveNum;
     ArrayList<Sprite> smallBombUse = new ArrayList<Sprite>();
     ArrayList<Sprite> bigBombUse = new ArrayList<Sprite>();
+    public int getSmallBombNum(){
+        return smallBombNum;
+    }
 
+    public int getReviveNum() {
+        return reviveNum;
+    }
 
-
-
+    int timer = 100;
     orl Wall;
-
-
     orl diamond;
     orl loadPics;
     Monster smallGoblin;
+    Bomb bomb;
     public loadingClass(){
 
     }
@@ -61,7 +67,7 @@ class loadingClass extends ApplicationAdapter {
         loadShopPage();
         loadShopRect();
         loadOtherObjects();
-
+        loadBomb();
         loadWall();
     }
     public orl getWall(){
@@ -93,14 +99,13 @@ class loadingClass extends ApplicationAdapter {
         mouseCursor = new Sprite(new Texture("pics/mouse.png"));
         smallBombUse.add(smallBomb);
         bigBombUse.add(bigBomb);
-        /*
+
         for(int i = 0; i<6;i++){
             smallBombUse.add(new Sprite(new Texture("pics/ex"+Integer.toString(i+1)+".png")));
         }
         for(int i = 0; i<6;i++){
             bigBombUse.add(new Sprite(new Texture("pics/ex"+Integer.toString(i+1)+".png")));
         }
-        */
     }
     public void loadShopPage(){
         shopPage = new Sprite(new Texture(Gdx.files.internal("pics/shopPage.png")));
@@ -253,6 +258,46 @@ class loadingClass extends ApplicationAdapter {
     }
     public Sprite getItemBar(){
         return itemBar;
+    }
+    public boolean dealtDamage(Rectangle body){
+        if(bigBomb.getBoundingRectangle().overlaps(body)){
+            return true;
+        }
+        return false;
+    }
+
+
+    public void setBomb(float x, float y){
+        if(bigBombNum>0 && !bombPlnated) {
+            for (int i = 0; i < 6; i++) {
+                smallBombUse.get(i).setPosition(x, y);
+            }
+            bigBombNum--;
+            bombPlnated = true;
+        }
+    }
+    public ArrayList<Sprite> getSmallBombUse(){
+        return smallBombUse;
+    }
+    public boolean exploerd(){
+        return timer>0;
+    }
+    public boolean getPlanted(){
+        return  bombPlnated;
+    }
+    public void booming(){
+        if(bombPlnated) {
+            if (timer > 0) {
+                timer -= 1;
+            }
+
+        }
+    }
+    public void loadBomb(){
+        bomb = new Bomb(50,smallBomb,smallBombUse);
+    }
+    public Bomb getBomb(){
+        return bomb;
     }
 
 }

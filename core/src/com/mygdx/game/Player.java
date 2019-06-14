@@ -219,13 +219,13 @@ class Player {
         Current = movingR.get(picture);
     }
     public void loseHealth(){
-        health -=0.01;
+        health -= 0.01;
     }
     public void useHealth(){
         health += 50;
     }
     public void useOxygen(){
-        oxygen+=50;
+        oxygen += 50;
     }
     public void takeDamage(float k){
         health -= k;

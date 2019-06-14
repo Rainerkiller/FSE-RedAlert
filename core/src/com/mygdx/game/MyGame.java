@@ -35,6 +35,7 @@ public class MyGame extends ApplicationAdapter {
     int shopCounter = 0;
     float gasLine = 0;
     float timer1 = 0;
+    ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 
 
     public void createWorld(){
@@ -357,7 +358,13 @@ public class MyGame extends ApplicationAdapter {
             if(Gdx.input.isKeyPressed(Input.Keys.S)){
                 role.useOxygen();
             }
-            
+
+
+            if(Gdx.input.isKeyPressed(Input.Keys.D)){
+                if(A.getSmallBombNum()>0){
+                    bombs.add(A.getBomb());
+                }
+            }
             if(role.getCollideMonster(monsters)&& timer1>500){
                 role.takeDamge(50);
                 timer1 = 0;
@@ -371,18 +378,18 @@ public class MyGame extends ApplicationAdapter {
 
 
             if(role.getBody().overlaps(worldRect)) {
-                if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                     // use translate(vx,vy), translateX(vx) or translateY(vy)
                     if(!role.getCollideUp(orls)) {
-                        if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+                        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                             role.setPosition("left");
-                        } else if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+                        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                             role.setPosition("right");
                         }
                     } else if(role.getCollideUp(orls)){
                         role.setPosition("fakeUp");
                     }
-                } else if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 
                     if (role.getCollideLeft(orls)) {
                         if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
@@ -396,7 +403,7 @@ public class MyGame extends ApplicationAdapter {
                         role.setPosition("left");
 
                     }
-                } else if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                     if (role.getCollideRight(orls)) {
                         if (orls.indexOf(role.getCollideOrlRight(orls)) != -1) {
                             orls.get(orls.indexOf(role.getCollideOrlRight(orls))).mining();
@@ -411,7 +418,7 @@ public class MyGame extends ApplicationAdapter {
                         role.setPosition("right");
                     }
                 }
-                else if (Gdx.input.isKeyPressed(Input.Keys.K) && role.getCollide(orls)) {
+                else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && role.getCollide(orls)) {
                     if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
                         orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
                         role.digDown();
@@ -423,17 +430,17 @@ public class MyGame extends ApplicationAdapter {
                 }
 
             }else {
-                if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                     if(role.getBody().getY()-10<worldRect.getY()){
                         role.setPosition("up");
                     }
                     if(!role.getCollideUp(orls)) {
                         moveWorld(0,-constantY);
                         role.setPosition("fakeUp");
-                        if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+                        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                             role.setPosition("fakeUpLeft");
                             moveWorld(constantX,-constantY);
-                        } else if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+                        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                             role.setPosition("fakeUpRight");
                             moveWorld(-constantX,-constantY);
 
@@ -442,7 +449,7 @@ public class MyGame extends ApplicationAdapter {
                         role.setPosition("fakeUp");
                     }
 
-                } else if (Gdx.input.isKeyPressed(Input.Keys.J)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 
                     if (role.getCollideLeft(orls)) {
                         if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
@@ -459,7 +466,7 @@ public class MyGame extends ApplicationAdapter {
                         role.setPosition("fakeLeft");
 
                     }
-                } else if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                     if (role.getCollideRight(orls)) {
                         if (orls.indexOf(role.getCollideOrlRight(orls)) != -1) {
                             orls.get(orls.indexOf(role.getCollideOrlRight(orls))).mining();
@@ -475,7 +482,7 @@ public class MyGame extends ApplicationAdapter {
                         role.setPosition("fakeRight");
 
                     }
-                } else if (Gdx.input.isKeyPressed(Input.Keys.K) && role.getCollide(orls)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && role.getCollide(orls)) {
 
                     if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
                         orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
@@ -530,6 +537,15 @@ public class MyGame extends ApplicationAdapter {
                     }
                 }
             }
+            for(Bomb ok : bombs){
+                if(ok.explored){
+                    bombs.remove(ok);
+                    break;
+                }else{
+                    ok.getCurrent().draw(batch);
+                }
+                    ok.booming();
+            }
             role.getCurrent().draw(batch);
             font.draw(batch, "your money: "+role.getMoney(), 10, 900);
             font.draw(batch, "your health: "+role.getHealth(), 10, 700);
@@ -568,8 +584,12 @@ public class MyGame extends ApplicationAdapter {
 
         A.getSkyPic().translateX(x);
         A.getSkyPic().translateY(y);
-
-
+        for(int i = 0;i<A.getSmallBombUse().size();i++){
+            A.getSmallBombUse().get(i).translateX(x);
+            A.getSmallBombUse().get(i).translateY(y);
+        }
+        A.getBigBomb().translateX(x);
+        A.getBigBomb().translateY(y);
 
 
     }
