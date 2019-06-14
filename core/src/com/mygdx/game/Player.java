@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.lang.reflect.Array;
+import java.security.DigestException;
 import java.util.ArrayList;
 
 class Player {
@@ -19,6 +20,7 @@ class Player {
     ArrayList<Sprite> fly = new ArrayList<Sprite>();
     ArrayList<Sprite> flyLeft = new ArrayList<Sprite>();
     ArrayList<Sprite> flyRight = new ArrayList<Sprite>();
+    ArrayList<Sprite> roleDig = new ArrayList<Sprite>();
 
     String [] bag = new String[18];
     float health;
@@ -32,7 +34,7 @@ class Player {
     float speed = 0;
 
     public Player(ArrayList<Sprite> noMotion, ArrayList<Sprite> movingL
-            ,ArrayList<Sprite> fly,ArrayList<Sprite> flyRight,ArrayList<Sprite> flyLeft, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage){
+            ,ArrayList<Sprite> fly,ArrayList<Sprite> flyRight,ArrayList<Sprite> flyLeft, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage,ArrayList<Sprite> roleDig){
         Current = noMotion.get(0);
         this.noMotion = noMotion;
         this.movingL = movingL;
@@ -41,6 +43,7 @@ class Player {
         this.fly = fly;
         this.flyLeft = flyLeft;
         this.flyRight = flyRight;
+        this.roleDig = roleDig;
         name = "role";
         Money = 0;
         health = 100;
@@ -48,7 +51,7 @@ class Player {
         body = Current.getBoundingRectangle();
         body.setX(body.getX()+10);
         body.setY(body.getY()+20);
-        body.setHeight(76);
+        body.setHeight(70);
         body.setWidth(50);
         setPosition(641,477);
     }
@@ -122,14 +125,36 @@ class Player {
             if(speed<6){
                 speed+=acceleration;
             }
+        }else if(a.equals("digDown")){
+            digDown();
+        }else if(a.equals("digRight")){
+            digRight();
+        }else if(a.equals("digLeft")){
+            digLeft();
+        }else if(a.equals("fakeUp")){
+            fakeUp();
+        }else if(a.equals("fakeRight")){
+            right();
+        }else if(a.equals("fakeUp")){
+            up();
+        }else if(a.equals("fakeLeft")){
+            left();
+        }else if(a.equals("fakeUpLeft")){
+            upLeft();
+        }else if(a.equals("fakeUpRight")){
+            upRight();
         }
         refreshPosition();
         Current.setPosition(currentX,currentY);
         body = Current.getBoundingRectangle();
         body.setX(body.getX()+10);
+        body.setY(body.getY()+5);
         body.setHeight(76);
         body.setWidth(50);
 
+    }
+    public void fakeUp(){
+        Current = fly.get(0);
     }
     public void acc(){
         Current = noMotion.get(0);
@@ -142,6 +167,15 @@ class Player {
     }
     public void up(){
         Current = fly.get(0);
+    }
+    public void digDown(){
+        Current = roleDig.get(0);
+    }
+    public void digLeft(){
+        Current = roleDig.get(1);
+    }
+    public void digRight(){
+        Current = roleDig.get(2);
     }
     public void Static(){
         if (picture < movingL.size()-1&& timer>100) {
@@ -173,6 +207,9 @@ class Player {
         return body;
     }
     public void refreshPosition(){
+        for(int i = 0;i< roleDig.size();i++){
+            roleDig.get(i).setPosition(currentX,currentY);
+        }
         for(int i =0;i<noMotion.size();i++){
             noMotion.get(i).setPosition(currentX,currentY);
         }
@@ -205,9 +242,12 @@ class Player {
     }
     public boolean getCollideRight(ArrayList<orl> orls){
         for(int i = 0;i<orls.size();i++){
+            Rectangle orl = orls.get(i).getRect();
             if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
-                if(orls.get(i).getCurrent().getBoundingRectangle().getX()>(body.getX()+body.getWidth())) {
-                    return true;
+                if(orl.getY()<body.getY()+body.getHeight()){
+                    if(orl.getY()+orl.getHeight()>body.getY()+20) {
+                        return true;
+                    }
                 }
             }
         }
@@ -217,7 +257,23 @@ class Player {
         for(int i = 0;i<orls.size();i++) {
             Rectangle orl = orls.get(i).getRect();
             if (orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)) {
-                if(orl.getY()+orl.getHeight()>body.getY()+body.getHeight()/2) {
+                if(orl.getY()<body.getY()+body.getHeight()){
+                    if(orl.getY()+orl.getHeight()>body.getY()+20) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    public boolean getCollideUp(ArrayList<orl> orls){
+        for(int i = 0;i<orls.size();i++) {
+            Rectangle orl = orls.get(i).getRect();
+            if (orl.overlaps(body)) {
+                System.out.print(orl.getY()+"   ");
+                System.out.println(orl.getY());
+                if(orl.getY()+orl.getHeight()>body.getY()+body.getHeight()) {
+                    if(orl.getX()+orl.getWidth()>= body.getX()+body.getWidth())
                     return true;
                 }
             }
