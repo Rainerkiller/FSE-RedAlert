@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 
 class loadingClass extends ApplicationAdapter {
-    Player role;
+    //Name variables
+    Player role;//player him/herself
+    //different orl
     orl dirt;
     orl coal;
     orl copper;
@@ -17,9 +19,15 @@ class loadingClass extends ApplicationAdapter {
     orl crystal;
     float x =0;
     float y = 100;
+
+    //list for background and shop
     boolean bombPlnated = false;
     ArrayList<Sprite> backgroundPics = new ArrayList<Sprite>();
     ArrayList<Sprite> shopPics = new ArrayList<Sprite>();
+    ArrayList<Sprite> smallBombUse = new ArrayList<Sprite>();
+    ArrayList<Sprite> bigBombUse = new ArrayList<Sprite>();
+
+    //different spites
     Sprite shopRect;
 
     Sprite skyPic;
@@ -33,13 +41,16 @@ class loadingClass extends ApplicationAdapter {
     Sprite reviveKit;
 
     Sprite mouseCursor;
+
+    //number of each items
     int oxyNum;
     int smallBombNum;
     int bigBombNum;
     int aidNum;
     int reviveNum;
-    ArrayList<Sprite> smallBombUse = new ArrayList<Sprite>();
-    ArrayList<Sprite> bigBombUse = new ArrayList<Sprite>();
+
+    //ArrayList<Sprite> smallBombUse = new ArrayList<Sprite>();
+    //ArrayList<Sprite> bigBombUse = new ArrayList<Sprite>();
     public int getSmallBombNum(){
         return smallBombNum;
     }
@@ -48,6 +59,8 @@ class loadingClass extends ApplicationAdapter {
         return reviveNum;
     }
 
+
+    //special items
     int timer = 100;
     orl Wall;
     orl diamond;
@@ -57,7 +70,7 @@ class loadingClass extends ApplicationAdapter {
     public loadingClass(){
 
     }
-
+    //load all
     public loadingClass(String a){
         loadDirt();
         loadRole();
@@ -71,9 +84,11 @@ class loadingClass extends ApplicationAdapter {
         loadBomb();
         loadWall();
     }
+    //load the wall
     public orl getWall(){
         return Wall;
     }
+
     public void loadWall(){
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
         ArrayList<Sprite> orl = new ArrayList<Sprite>();
@@ -84,13 +99,15 @@ class loadingClass extends ApplicationAdapter {
         orl.add(new Sprite(new Texture("pics/hardRock.png")));
         Wall = new orl("wall", 0,picture,new Sprite(new Texture("pics/hardRock.png")),orl,false);
     }
+
+    //load items in the shop
     public void loadOtherObjects(){
         oxyNum = 0;
         smallBombNum = 0;
         bigBombNum = 0;
         aidNum = 0;;
         reviveNum = 0;
-
+        //sprites
         itemBar = new Sprite(new Texture("pics/itemBar.png"));
         oxygenCapsule = new Sprite(new Texture("pics/oxygenCapsule.png"));
         smallBomb = new Sprite(new Texture("pics/smallBomb.png"));
@@ -101,6 +118,9 @@ class loadingClass extends ApplicationAdapter {
         smallBombUse.add(smallBomb);
         bigBombUse.add(bigBomb);
 
+        //explosion sprites
+
+
         for(int i = 0; i<6;i++){
             smallBombUse.add(new Sprite(new Texture("pics/ex"+Integer.toString(i+1)+".png")));
         }
@@ -108,6 +128,7 @@ class loadingClass extends ApplicationAdapter {
             bigBombUse.add(new Sprite(new Texture("pics/ex"+Integer.toString(i+1)+".png")));
         }
     }
+    //load sprites for other items
     public void loadShopPage(){
         shopPage = new Sprite(new Texture(Gdx.files.internal("pics/shopPage.png")));
     }
@@ -151,11 +172,11 @@ class loadingClass extends ApplicationAdapter {
         ArrayList<Sprite> orl = new ArrayList<Sprite>();
         ArrayList<Sprite> picture = new ArrayList<Sprite>();
         for(int i = 0; i < 6; i++){
-            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));//load sprites
         }
         orl.add(new Sprite(new Texture("pics/coalOriginal.png")));
         orl.add(new Sprite(new Texture("pics/coalOxidized.png")));
-        coal = new orl("coal", 10,picture,new Sprite(new Texture("pics/earth1.png")),orl);
+        coal = new orl("coal", 10,picture,new Sprite(new Texture("pics/earth1.png")),orl);//add to orl
     }
     public void loadCopper(){
         ArrayList<Sprite> orl = new ArrayList<Sprite>();
@@ -188,6 +209,7 @@ class loadingClass extends ApplicationAdapter {
         gold = new orl("gold", 200,picture,new Sprite(new Texture("pics/earth1.png")),orl);
     }
     public void loadRole(){
+        //diffrent sprites for role
         ArrayList<Sprite> walkR = new ArrayList<Sprite>();
         ArrayList<Sprite> walkL = new ArrayList<Sprite>();
         ArrayList<Sprite> roleStatic = new ArrayList<Sprite>();
@@ -217,6 +239,8 @@ class loadingClass extends ApplicationAdapter {
 
         role = new Player(roleStatic, walkL,roleJet,roleJetRight,roleJetLeft,walkR,roleTakeDamage,roleDig);
     }
+
+    //useful when calling variables
     public orl getCoal(){return  coal;}
     public orl getDirt(){return dirt;}
     public Player getRole(){
