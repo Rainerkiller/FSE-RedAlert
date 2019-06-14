@@ -79,6 +79,9 @@ class Player {
     public String[] getBag() {
         return bag;
     }
+    public void getOrl(orl orl){
+        Money+=orl.getPrice();
+    }
     public void setPosition(float x,float y){
         currentX = x;
         currentY = y;
@@ -261,7 +264,7 @@ class Player {
             if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)&&!orls.get(i).getOrl()){
                 if(orl.getY()<body.getY()+body.getHeight()){
                     if(orl.getY()+orl.getHeight()>body.getY()+20) {
-                        if(orl.getX()>body.getX()+body.getWidth()-5){
+                        if(orl.getX()>body.getX()+body.getWidth()-7){
                                 return true;
                         }
                     }
@@ -338,7 +341,7 @@ class Player {
             if(orls.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
                 if(orl.getY()<body.getY()+body.getHeight()){
                     if(orl.getY()+orl.getHeight()>body.getY()+20) {
-                        if(orl.getX()>body.getX()+body.getWidth()-5){
+                        if(orl.getX()>body.getX()+body.getWidth()-7){
                             return orls.get(i);
                         }
                     }

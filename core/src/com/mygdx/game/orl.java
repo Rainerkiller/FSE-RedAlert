@@ -83,10 +83,10 @@ class orl {
         }else if(name.equals("dirt")){
             Appear = false;
         }
-         if(percentage<5){
+         if(percentage<5&&!name.equals("dirt")){
              getPic().get(1).setPosition(Current.getX()+20,Current.getY()+20);
-            Current = new Sprite(getPic().get(1));
-            orl = true;
+             Current = new Sprite(getPic().get(1));
+             orl = true;
         }
         else if(percentage<10){
             Current = new Sprite(getInDirty().get(5));

@@ -11,15 +11,13 @@ class loadingClass extends ApplicationAdapter {
     Player role;
     orl dirt;
     orl coal;
-    orl steel;
+    orl copper;
     orl gold;
-    orl dimand;
+    orl crystal;
     float x =0;
     float y = 100;
     Sprite back;
-
-    orl diamond;
-    orl loadPics;
+    Monster smallGoblin;
     public loadingClass(){
 
     }
@@ -28,7 +26,17 @@ class loadingClass extends ApplicationAdapter {
         loadRole();
         loadCoal();
         loadBack();
-
+        loadCopper();
+        loadCrystal();
+        loadGold();
+        loadSmallGoblin();
+    }
+    public Monster getSmallGoblin(){
+        return smallGoblin;
+    }
+    public void loadSmallGoblin(){
+        Sprite sprite = new Sprite(new Texture("pics/smallGoblin1.png"));
+        smallGoblin = new Monster(500,50,sprite);
     }
     public void loadBack(){
         back = new Sprite(new Texture(Gdx.files.internal("pics/earthScreen.png")));
@@ -48,8 +56,38 @@ class loadingClass extends ApplicationAdapter {
             picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
         }
         orl.add(new Sprite(new Texture("pics/coalOriginal.png")));
-        orl.add(new Sprite(new Texture("pics/coalOxidize.png")));
-        coal = new orl("coal", 0,picture,new Sprite(new Texture("pics/earth1.png")),orl);
+        orl.add(new Sprite(new Texture("pics/coalOxidized.png")));
+        coal = new orl("coal", 10,picture,new Sprite(new Texture("pics/earth1.png")),orl);
+    }
+    public void loadCopper(){
+        ArrayList<Sprite> orl = new ArrayList<Sprite>();
+        ArrayList<Sprite> picture = new ArrayList<Sprite>();
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+        }
+        orl.add(new Sprite(new Texture("pics/copperOriginal.png")));
+        orl.add(new Sprite(new Texture("pics/copperOxidized.png")));
+        copper = new orl("copper", 100,picture,new Sprite(new Texture("pics/earth1.png")),orl);
+    }
+    public void loadCrystal(){
+        ArrayList<Sprite> orl = new ArrayList<Sprite>();
+        ArrayList<Sprite> picture = new ArrayList<Sprite>();
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+        }
+        orl.add(new Sprite(new Texture("pics/crystalOriginal.png")));
+        orl.add(new Sprite(new Texture("pics/crystalOxidized.png")));
+        crystal = new orl("crystal", 800,picture,new Sprite(new Texture("pics/earth1.png")),orl);
+    }
+    public void loadGold(){
+        ArrayList<Sprite> orl = new ArrayList<Sprite>();
+        ArrayList<Sprite> picture = new ArrayList<Sprite>();
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+        }
+        orl.add(new Sprite(new Texture("pics/goldOriginal.png")));
+        orl.add(new Sprite(new Texture("pics/goldOxidized.png")));
+        gold = new orl("gold", 200,picture,new Sprite(new Texture("pics/earth1.png")),orl);
     }
     public void loadRole(){
         ArrayList<Sprite> walkR = new ArrayList<Sprite>();
@@ -87,4 +125,7 @@ class loadingClass extends ApplicationAdapter {
         return role;
     }
     public Sprite getBack(){return back;}
+    public orl getGold(){return  gold;}
+    public orl getCopper(){return copper;}
+    public orl getCrystal(){return crystal;}
 }

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import sun.security.provider.ConfigFile;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,51 +27,67 @@ public class MyGame extends ApplicationAdapter {
     float constantY=10;
     ArrayList<Sprite>sprites = new ArrayList<Sprite>();
     BitmapFont font;
-    Rectangle worldRect = new Rectangle(541,327,200,300);
-    ArrayList<Monster> monsters = new ArrayList<Monster>(
-    );
+    Rectangle worldRect = new Rectangle(541,500,200,300);
+    ArrayList<Monster> monsters = new ArrayList<Monster>();
     int startUpTimer = 0;
     int menuSelection = 0; //0 for start game, 1 for guide
     int loadingCounter = 0;
     int spriteIndex = 0;
 
-
-
-
-
-
-
-
-
-
-    @Override
-    public void create () {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.getData().setScale(2f);
-        font.setColor(140,140,60,1);
+    public void world(){
         A = new loadingClass("a");
         role = A.getRole();
         orl dirt = A.getDirt();
         orl coal = A.getCoal();
         role.setPosition("");
-
+        orl gold = A.getGold();
+        orl copper = A.getCopper();
+        orl crystal = A.getCrystal();
         A.back.setPosition(0,-476);
         B = new otherObject();
-
-
-
-
+        int monster = 0;
         for(int i = 0;i<3000;i++){
-            orl copy2 = new orl(coal);
-            orls.add(copy2);
-            orls.get(i).setPostion(x,y);
+            int percentCoal = (int)(Math.random()*3);
+            int percentCopper = (int)(Math.random()*5);
+            int percentGold = (int)(Math.random()*10);
+            int percentCrystal = (int)(Math.random()*50);
+            int percentSmallGoblin =(int)(Math.random()*200);
+            if(percentSmallGoblin == 1){
+                Monster smallGoblin = A.getSmallGoblin();
+                smallGoblin.setPostion(x,y);
+                monsters.add(new Monster(smallGoblin));
+                monster++;
+                i+=7;
+            }
+            else if(percentCrystal == 1){
+                orls.add(new orl(crystal));
+            }
+            else if(percentGold == 1) {
+                orls.add(new orl(gold));
+            }
+            else if(percentCopper == 1){
+                orls.add(new orl(copper));
+            }else if(percentCoal == 1){
+                orls.add(new orl(coal));
+            }
+            else{
+                orls.add(new orl(dirt));
+            }
+            orls.get(i-8*monster).setPostion(x,y);
             x = x+76;
             if(i%30==0){
                 x = 0;
                 y-=76;
             }
         }
+    }
+    @Override
+    public void create () {
+        batch = new SpriteBatch();
+        font = new BitmapFont();
+        font.getData().setScale(2f);
+        font.setColor(140,140,60,1);
+        world();
     }
 
     @Override
@@ -234,7 +249,7 @@ public class MyGame extends ApplicationAdapter {
 
                         }
                     } else if(role.getCollideUp(orls)) {
-                        role.setPosition("up");
+                        role.setPosition("fakeUp");
                     }
 
                 } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -288,28 +303,30 @@ public class MyGame extends ApplicationAdapter {
             }
             if(role.getCollideOrl(orls).getOrl()){
                 role.getCollideOrl(orls).pickUp();
+                role.getOrl(role.getCollideOrl(orls));
             }
             for(int i =0;i<orls.size();i++) {
                 if(orls.get(i).Appear) {
                     if(orls.get(i).getCurrent().getX()>-100&&orls.get(i).getCurrent().getX()<1300) {
-                        if(orls.get(i).getCurrent().getY()>-100&&orls.get(i).getCurrent().getY()<1000) {
-                            if(!orls.get(i).getName().equals("dirt")){
+                        if (orls.get(i).getCurrent().getY() > -100 && orls.get(i).getCurrent().getY() < 1000) {
                                 orls.get(i).getCurrent().draw(batch);
-                            }
                         }
                     }
                 }else{
                     orls.remove(i);
                 }
             }
+            for(int i =0;i<monsters.size();i++){
+                if(monsters.get(i).getCurrent().getX()>-100&&monsters.get(i).getCurrent().getX()<1300) {
+                    if (monsters.get(i).getCurrent().getY() > -100 && monsters.get(i).getCurrent().getY() < 1000) {
+                        monsters.get(i).getCurrent().draw(batch);
+                    }
+                }
+            }
+            System.out.println(monsters.size());
             role.getCurrent().draw(batch);
-
-
-
-
-
         }
-
+        monsters.get(0).getCurrent().draw(batch);
         batch.end();
     }
     @Override
