@@ -47,13 +47,12 @@ public class MyGame extends ApplicationAdapter {
         orl copper = A.getCopper();
         orl crystal = A.getCrystal();
         A.getShopRect().setPosition(640,478);
-<<<<<<< HEAD
+
         A.getItemBar().setPosition(440,820);
 
-=======
+
         orl Wall = A.getWall();
-        B = new otherObject();
->>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
+
         int monster = 0;
         ArrayList<orl> fakeOrl = new ArrayList<orl>();
 
@@ -84,7 +83,6 @@ public class MyGame extends ApplicationAdapter {
             copyX++;
         }
 
-        B = new otherObject();
         for(int i = 0;i<3200;i++) {
             int percentCoal = (int) (Math.random() * 3);
             int percentCopper = (int) (Math.random() * 5);
@@ -306,8 +304,6 @@ public class MyGame extends ApplicationAdapter {
                 font.draw(batch,Integer.toString(A.reviveNum),770,820);
 
                 A.getItemBar().draw(batch);
-                font.draw(batch,Float.toString(C.getMouseX()),500,700);
-                font.draw(batch,Float.toString(C.getMouseY()),500,600);
                 A.getMouse().draw(batch);
             }
         }
@@ -519,10 +515,14 @@ public class MyGame extends ApplicationAdapter {
             role.getCurrent().draw(batch);
             monsters.get(0).getCurrent().draw(batch);
         }
-<<<<<<< HEAD
+        font.draw(batch,"Money:  "+Integer.toString(role.getMoney()),10,900);
+        font.draw(batch,Integer.toString(A.aidNum),492,820);
+        font.draw(batch,Integer.toString(A.oxyNum),560,820);
+        font.draw(batch,Integer.toString(A.smallBombNum),630,820);
+        font.draw(batch,Integer.toString(A.bigBombNum),700,820);
+        font.draw(batch,Integer.toString(A.reviveNum),770,820);
 
-=======
->>>>>>> 05706fba2e559be1006d65688045d60a12d0adba
+        A.getItemBar().draw(batch);
         batch.end();
     }
     @Override
