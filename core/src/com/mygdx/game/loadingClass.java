@@ -19,6 +19,10 @@ class loadingClass extends ApplicationAdapter {
     ArrayList<Sprite> shopPics = new ArrayList<Sprite>();
     Sprite shopRect;
     orl Wall;
+
+
+    orl diamond;
+    orl loadPics;
     Monster smallGoblin;
     public loadingClass(){
 
@@ -46,6 +50,8 @@ class loadingClass extends ApplicationAdapter {
         orl.add(new Sprite(new Texture("pics/hardRock.png")));
         Wall = new orl("wall", 0,picture,new Sprite(new Texture("pics/hardRock.png")),orl,false);
     }
+
+
     public void loadShopRect(){
         shopRect = new Sprite(new Texture(Gdx.files.internal("pics/earth1.png")));
     }

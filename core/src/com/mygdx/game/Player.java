@@ -53,7 +53,7 @@ class Player {
         body.setY(body.getY()+10);
         body.setHeight(70);
         body.setWidth(65);
-        setPosition(641,477);
+        setPosition(541,477);
     }
     public Player(){
         name = "role";

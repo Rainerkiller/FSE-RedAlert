@@ -78,35 +78,38 @@ public class MyGame extends ApplicationAdapter {
             copyX++;
         }
 
+        B = new otherObject();
         for(int i = 0;i<3200;i++) {
             int percentCoal = (int) (Math.random() * 3);
             int percentCopper = (int) (Math.random() * 5);
             int percentGold = (int) (Math.random() * 10);
             int percentCrystal = (int) (Math.random() * 50);
             int percentSmallGoblin = (int) (Math.random() * 200);
-            if(percentSmallGoblin == 1&&i>64){
+            if (percentSmallGoblin == 1 && i > 64) {
                 Monster smallGoblin = new Monster(A.getSmallGoblin());
-                smallGoblin.setPostion(x,y);
+                smallGoblin.setPostion(x, y);
                 monsters.add(smallGoblin);
             }
 
-             if (percentCrystal == 1) {
-                orls.add(new orl(crystal));
-            } else if (percentGold == 1) {
-                orls.add(new orl(gold));
-            } else if (percentCopper == 1) {
-                orls.add(new orl(copper));
-            } else if (percentCoal == 1) {
-                orls.add(new orl(coal));
-            } else {
-                orls.add(new orl(dirt));
-            }
-            orls.get(i-monster).setPostion(x, y);
-            x = x + 76;
-            if (i % 32 == 0) {
-                x = -76;
-                y -= 76;
-            }
+
+
+                 if (percentCrystal == 1) {
+                    orls.add(new orl(crystal));
+                } else if (percentGold == 1) {
+                    orls.add(new orl(gold));
+                } else if (percentCopper == 1) {
+                    orls.add(new orl(copper));
+                } else if (percentCoal == 1) {
+                    orls.add(new orl(coal));
+                } else {
+                    orls.add(new orl(dirt));
+                }
+                orls.get(i).setPostion(x, y);
+                x = x + 76;
+                if (i % 32 == 0) {
+                    x = -76;
+                    y -= 76;
+                }
         }
         orls.remove(0);//remove the very first blok that was for test purpose
         ArrayList<orl> collideToMonster = new ArrayList<orl>();
@@ -127,6 +130,17 @@ public class MyGame extends ApplicationAdapter {
         int loadCounter = 0;
         for(int i = 0;i<A.getBackList().size();i++){
             A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/3+1));
+            orls.get(i - 8 * monster).setPostion(x, y);
+            x = x + 76;
+            if (i % 30 == 0) {
+                x = 0;
+                y -= 76;
+            }
+        }
+        orls.remove(0);//remove the very first blok that was for test purpose
+        for(int i = 0;i<A.getBackList().size();i++){
+            A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/3+1));
+
             if(loadCounter==3) {
                 loadCounter = 0;
             }else{
@@ -249,6 +263,8 @@ public class MyGame extends ApplicationAdapter {
             }else{
                 shopCounter+=1;
             }
+
+
 
             if(role.getBody().overlaps(worldRect)) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -432,5 +448,9 @@ public class MyGame extends ApplicationAdapter {
             monsters.get(i).getCurrent().translateX(x);
             monsters.get(i).getCurrent().translateY(y);
         }
+
+
+
+
     }
 }
