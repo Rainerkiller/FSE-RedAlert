@@ -167,7 +167,7 @@ public class MyGame extends ApplicationAdapter {
                             orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
                             role.digLeft();
                         }
-                    } else if (!role.getCollide(orls)) {
+                    } else if (!role.getCollideDown(orls)&&!role.getCollideLeft(orls)) {
                         role.setPosition("left");
                         role.setPosition("acc");
                     } else {
@@ -175,17 +175,17 @@ public class MyGame extends ApplicationAdapter {
 
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    if (role.getCollideLeft(orls)) {
-                        if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
-                            orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
+                    if (role.getCollideRight(orls)) {
+                        if (orls.indexOf(role.getCollideOrlRight(orls)) != -1) {
+                            orls.get(orls.indexOf(role.getCollideOrlRight(orls))).mining();
                             role.digRight();
                         }
                     }
-                    else if (!role.getCollide(orls)) {
+                    else if (!role.getCollideRight(orls)&&!role.getCollideDown(orls)) {
                         role.setPosition("right");
                         role.setPosition("acc");
                     }
-                    if (!role.getCollideLeft(orls)) {
+                    else if (!role.getCollideRight(orls)) {
                         role.setPosition("right");
                     }
                 }
@@ -194,7 +194,7 @@ public class MyGame extends ApplicationAdapter {
                         orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
                         role.digDown();
                     }
-                } else if (role.getCollide(orls)) {
+                } else if (role.getCollideDown(orls)) {
                     role.setPosition("static");
                 } else {
                     role.setPosition("acc");
@@ -223,9 +223,8 @@ public class MyGame extends ApplicationAdapter {
                             orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
                             role.digLeft();
                         }
-                    } else if (!role.getCollide(orls)) {
+                    } else if (!role.getCollideDown(orls)) {
                         role.setPosition("fakeLeft");
-                        role.setPosition("fakeAcc");
                         moveWorld(constantX,0);
                         role.setPosition("fakeAcc");
                         moveWorld(0,constantY);
@@ -235,22 +234,30 @@ public class MyGame extends ApplicationAdapter {
 
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    role.setPosition("fakeRight");
-                    moveWorld(-constantX,0);
-                    if (!role.getCollide(orls)) {
-                        role.setPosition("acc");
+                    if (role.getCollideRight(orls)) {
+                        if (orls.indexOf(role.getCollideOrlRight(orls)) != -1) {
+                            orls.get(orls.indexOf(role.getCollideOrlRight(orls))).mining();
+                            role.digRight();
+                        }
+                    } else if (!role.getCollideDown(orls)) {
+                        role.setPosition("fakeRight");
+                        moveWorld(-constantX,0);
                         role.setPosition("fakeAcc");
                         moveWorld(0,constantY);
+                    } else {
+                        moveWorld(-constantX,0);
+                        role.setPosition("fakeRight");
+
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
                     if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
                         orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
+                        role.digDown();
                     }
-                } else if (role.getCollide(orls)) {
+                } else if (role.getCollideDown(orls)) {
                     role.setPosition("static");
                 } else {
                     role.setPosition("fakeAcc");
-                    role.setPosition("acc");
                     moveWorld(0,constantY);
                 }
             }
