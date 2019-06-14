@@ -22,7 +22,7 @@ class Player {
     ArrayList<Sprite> flyRight = new ArrayList<Sprite>();
     ArrayList<Sprite> roleDig = new ArrayList<Sprite>();
 
-    String [] bag = new String[18];
+    otherObject otherObjects;
     float health;
     float oxygen;
     float depth = 0;
@@ -32,7 +32,6 @@ class Player {
     int timer = 0;
     int picture = 0;
     float speed = 0;
-
     public Player(ArrayList<Sprite> noMotion, ArrayList<Sprite> movingL
             ,ArrayList<Sprite> fly,ArrayList<Sprite> flyRight,ArrayList<Sprite> flyLeft, ArrayList<Sprite> movingR, ArrayList<Sprite> takeDamage,ArrayList<Sprite> roleDig){
         Current = noMotion.get(0);
@@ -76,8 +75,11 @@ class Player {
         return oxygen;
     }
 
-    public String[] getBag() {
-        return bag;
+    public otherObject getBag() {
+        return otherObjects;
+    }
+    public void setBag(otherObject k){
+        otherObjects = k;
     }
     public void getOrl(orl orl){
         Money+=orl.getPrice();
@@ -86,6 +88,9 @@ class Player {
         currentX = x;
         currentY = y;
         refreshPosition();
+    }
+    public void loseOxygen(){
+        oxygen-=0.01;
     }
     public void setPosition(String a){
         if(a.equals("up")){
@@ -146,6 +151,8 @@ class Player {
             upLeft();
         }else if(a.equals("fakeUpRight")){
             upRight();
+        } else if(a.equals("takeFakeDamage")){
+            damage();
         }
         refreshPosition();
         Current.setPosition(currentX,currentY);
@@ -156,6 +163,7 @@ class Player {
         body.setWidth(50);
 
     }
+    public void damage(){Current = takeDamage.get(0);}
     public void fakeUp(){
         Current = fly.get(0);
     }
@@ -209,6 +217,26 @@ class Player {
             picture = 0;
         }
         Current = movingR.get(picture);
+    }
+    public void loseHealth(){
+        health -=0.01;
+    }
+    public void useHealth(){
+        health += 50;
+    }
+    public void useOxygen(){
+        oxygen+=50;
+    }
+    public void takeDamage(float k){
+        health -= k;
+    }
+    public boolean getCollideMonster(ArrayList<Monster> k){
+        for(int i =0; i<k.size();i++){
+            if(k.get(i).getCurrent().getBoundingRectangle().overlaps(body)){
+                return true;
+            }
+        }
+        return false;
     }
     public Rectangle getBody(){
         return body;
@@ -350,4 +378,5 @@ class Player {
         }
         return new orl();
     }
+
 }
