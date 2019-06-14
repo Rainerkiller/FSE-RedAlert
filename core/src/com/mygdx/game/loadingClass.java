@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
 
+
 class loadingClass extends ApplicationAdapter {
     Player role;
     orl dirt;

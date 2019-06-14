@@ -21,7 +21,7 @@ public class MyGame extends ApplicationAdapter {
     loadingClass A = new loadingClass();
     Toolbox C = new Toolbox();
     Player role = new Player();
-    float x = 641;
+    float x = 641;// x,y for role
     float y = 477;
     float constantX=5;
     float constantY=10;
@@ -38,7 +38,7 @@ public class MyGame extends ApplicationAdapter {
     ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 
 
-    public void createWorld(){
+    public void createWorld(){//create dei
         C=new Toolbox();
         A = new loadingClass("a");
         role = A.getRole();
@@ -590,7 +590,6 @@ public class MyGame extends ApplicationAdapter {
         }
         A.getBigBomb().translateX(x);
         A.getBigBomb().translateY(y);
-
 
     }
 }
