@@ -84,7 +84,7 @@ class orl {
             Appear = false;
         }
          if(percentage<5){
-             getPic().get(1).setPosition(Current.getX(),Current.getY());
+             getPic().get(1).setPosition(Current.getX()+20,Current.getY()+20);
             Current = new Sprite(getPic().get(1));
             orl = true;
         }
