@@ -25,6 +25,7 @@ class loadingClass extends ApplicationAdapter {
     public loadingClass(String a){
         loadDirt();
         loadRole();
+        loadCoal();
     }
 
     public void loadDirt(){
@@ -33,6 +34,16 @@ class loadingClass extends ApplicationAdapter {
             picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
         }
         dirt = new orl("dirt", 0,picture,new Sprite(new Texture("pics/earth1.png")));
+    }
+    public void loadCoal(){
+        ArrayList<Sprite> orl = new ArrayList<Sprite>();
+        ArrayList<Sprite> picture = new ArrayList<Sprite>();
+        for(int i = 0; i < 6; i++){
+            picture.add(new Sprite(new Texture(Gdx.files.internal("pics/earth"+Integer.toString(i+1)+".png"))));
+        }
+        orl.add(new Sprite(new Texture("pics/coalOriginal.png")));
+        orl.add(new Sprite(new Texture("pics/coalOxidize.png")));
+        coal = new orl("coal", 0,picture,new Sprite(new Texture("pics/earth1.png")),orl);
     }
     public void loadRole(){
         ArrayList<Sprite> walkR = new ArrayList<Sprite>();
@@ -60,8 +71,7 @@ class loadingClass extends ApplicationAdapter {
 
         role = new Player(roleStatic, walkL,roleJet,roleJetRight,roleJetLeft,walkR,roleTakeDamage);
     }
-    public void loadccoal(){
-    }
+    public orl getCoal(){return  coal;}
     public orl getDirt(){return dirt;}
     public Player getRole(){
         return role;

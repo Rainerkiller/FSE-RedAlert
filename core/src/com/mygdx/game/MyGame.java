@@ -21,12 +21,15 @@ public class MyGame extends ApplicationAdapter {
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
     Player role = new Player();
-    float x = 0;
-    float y = 500;
+    float x = 641;
+    float y = 477;
+    float constantX=5;
+    float constantY=5;
     ArrayList<Sprite>sprites = new ArrayList<Sprite>();
     BitmapFont font;
-
-
+    Rectangle worldRect = new Rectangle(541,327,200,300);
+    ArrayList<Monster> monsters = new ArrayList<Monster>(
+    );
     int startUpTimer = 0;
     int menuSelection = 0; //0 for start game, 1 for guide
     int loadingCounter = 0;
@@ -44,9 +47,10 @@ public class MyGame extends ApplicationAdapter {
         A = new loadingClass("a");
         role = A.getRole();
         orl dirt = A.getDirt();
+        orl coal = A.getCoal();
         role.setPosition("");
         for(int i = 0;i<3000;i++){
-            orl copy2 = new orl(dirt);
+            orl copy2 = new orl(coal);
             orls.add(copy2);
             orls.get(i).setPostion(x,y);
             x = x+76;
@@ -142,6 +146,8 @@ public class MyGame extends ApplicationAdapter {
 
 
         else if(status.equals("game")) {
+
+            if(role.getBody().overlaps(worldRect)) {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     // use translate(vx,vy), translateX(vx) or translateY(vy)
                     role.setPosition("up");
@@ -151,13 +157,15 @@ public class MyGame extends ApplicationAdapter {
                         role.setPosition("upRight");
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                    if (!role.getCollide(orls)) {
-                        role.setPosition("left");
 
+                    if (role.getCollideLeft(orls)) {
+                        if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
+                            orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
+                        }
+                    } else if (!role.getCollide(orls)) {
+                        role.setPosition("left");
                         role.setPosition("acc");
-                    } else if(role.getCollideLeft(orls)){
-                        orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
-                    }else {
+                    } else {
                         role.setPosition("left");
 
                     }
@@ -166,24 +174,80 @@ public class MyGame extends ApplicationAdapter {
                     if (!role.getCollide(orls)) {
                         role.setPosition("acc");
                     }
-                }
-                else if(Gdx.input.isKeyPressed(Input.Keys.S)&&role.getCollide(orls)) {
-                    orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
-                }
-                else if (role.getCollide(orls)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
+                    if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
+                        orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
+                    }
+                } else if (role.getCollide(orls)) {
                     role.setPosition("static");
-                }
-                else{
+                } else {
                     role.setPosition("acc");
                 }
+            }else {
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    role.setPosition("up");
+                    moveWorld(0,-constantY);
+                    if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                        role.setPosition("upLeft");
+                        moveWorld(constantX,-constantY);
+                    } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                        role.setPosition("upRight");
+                        moveWorld(-constantX,-constantY);
+                    }
+                } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                    System.out.println(role.getCollideLeft(orls));
+
+                    if (role.getCollideLeft(orls)) {
+                        if (orls.indexOf(role.getCollideOrlLeft(orls)) != -1) {
+                            orls.get(orls.indexOf(role.getCollideOrlLeft(orls))).mining();
+                        }
+                    } else if (!role.getCollide(orls)) {
+                        role.setPosition("left");
+                        role.setPosition("acc");
+                        moveWorld(constantX,0);
+                        role.setPosition("fakeAcc");
+                        moveWorld(0,role.getSpeed());
+                    } else {
+                        moveWorld(constantX,0);
+                        role.setPosition("left");
+
+                    }
+                } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                    role.setPosition("right");
+                    moveWorld(-constantX,0);
+                    if (!role.getCollide(orls)) {
+                        role.setPosition("acc");
+                        role.setPosition("fakeAcc");
+                        moveWorld(0,role.getSpeed());
+                    }
+                } else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
+                    if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
+                        orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
+                    }
+                } else if (role.getCollide(orls)) {
+                    role.setPosition("static");
+                } else {
+                    role.setPosition("fakeAcc");
+                    role.setPosition("acc");
+                    moveWorld(0,role.getSpeed());
+                }
+            }
 
             if (Gdx.input.isKeyPressed(Input.Keys.P)) {
                 status  = "pause";
             }
-
+            if(role.getCollideOrl(orls).getOrl()){
+                role.getCollideOrl(orls).pickUp();
+            }
             for(int i =0;i<orls.size();i++) {
                 if(orls.get(i).Appear) {
-                    orls.get(i).getCurrent().draw(batch);
+                    if(orls.get(i).getCurrent().getX()>-100&&orls.get(i).getCurrent().getX()<1300) {
+                        if(orls.get(i).getCurrent().getY()>-100&&orls.get(i).getCurrent().getY()<1000) {
+                            if(!orls.get(i).getName().equals("dirt")){
+                                orls.get(i).getCurrent().draw(batch);
+                            }
+                        }
+                    }
                 }else{
                     orls.remove(i);
                 }
@@ -196,5 +260,10 @@ public class MyGame extends ApplicationAdapter {
     @Override
     public void dispose(){
         batch.dispose();
+    }
+    public void moveWorld(float x,float y){
+        for(int i = 0;i<orls.size();i++){
+            orls.get(i).moveOrl(x,y);
+        }
     }
 }
