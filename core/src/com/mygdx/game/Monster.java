@@ -27,7 +27,10 @@ class Monster {
         this.damage = damage;
         this.current = current;
         body = current.getBoundingRectangle();
-
+        body.setX(body.getX()+10);
+        body.setY(body.getY()-5);
+        body.setHeight(76);
+        body.setWidth(50);
     }
     public Rectangle getBody(){
         return body;
@@ -48,10 +51,21 @@ class Monster {
         current.translateX(x);
         current.translateY(y);
     }
+    public void Moving(String direction){
+        if(direction.equals("left")){
+            currentX-=0.1;
+        }else if(direction.equals("right")){
+            currentX+=0.1;
+        }
+        refreshPosition();
+    }
     public void refreshPosition(){
         current.translateX(currentX);
         body = current.getBoundingRectangle();
-
+        body.setX(body.getX()+10);
+        body.setY(body.getY()-5);
+        body.setHeight(76);
+        body.setWidth(50);
     }
     public void takeDamage(int damage){
         health -= damage;

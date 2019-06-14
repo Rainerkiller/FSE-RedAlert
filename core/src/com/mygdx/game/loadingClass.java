@@ -72,7 +72,7 @@ class loadingClass extends ApplicationAdapter {
         smallGoblin = new Monster(500,50,sprite);
     }
     public void loadBack(){
-        for(int i = 0; i<50;i++){
+        for(int i = 0; i<24;i++){
             backgroundPics.add(new Sprite(new Texture(Gdx.files.internal("pics/earthScreen.png"))));
         }
 

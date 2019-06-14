@@ -25,6 +25,7 @@ public class MyGame extends ApplicationAdapter {
     float y = 477;
     float constantX=5;
     float constantY=10;
+    ArrayList<Sprite>sprites = new ArrayList<Sprite>();
     BitmapFont font;
     Rectangle worldRect = new Rectangle(541,500,200,300);
     ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -33,8 +34,8 @@ public class MyGame extends ApplicationAdapter {
     int loadingCounter = 0;
     int spriteIndex = 0;
     int shopCounter = 0;
-    float gasLine = 0;
-    float timer1 = 0;
+
+
     public void world(){
         A = new loadingClass("a");
         role = A.getRole();
@@ -128,8 +129,13 @@ public class MyGame extends ApplicationAdapter {
         }
         int loadCounter = 0;
         for(int i = 0;i<A.getBackList().size();i++){
-            A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/5+1));
-
+            A.getBackList().get(i).setPosition(loadCounter*1282,-476*(i/3+1));
+            orls.get(i - 8 * monster).setPostion(x, y);
+            x = x + 76;
+            if (i % 30 == 0) {
+                x = 0;
+                y -= 76;
+            }
         }
         orls.remove(0);//remove the very first blok that was for test purpose
         for(int i = 0;i<A.getBackList().size();i++){
@@ -147,11 +153,10 @@ public class MyGame extends ApplicationAdapter {
     }
     @Override
     public void create () {
-        img = new Texture("pics/background.png");
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.getData().setScale(2f);
-        font.setColor(140,140,55,2);
+        font.setColor(140,140,60,1);
         world();
     }
 
@@ -163,8 +168,6 @@ public class MyGame extends ApplicationAdapter {
 
 
         batch.begin();
-        new Sprite(img).draw(batch);
-
         if(status.equals("startUp")){
 
             Sprite cover = new Sprite(new Texture("pics/cover.png"));
@@ -253,21 +256,8 @@ public class MyGame extends ApplicationAdapter {
 
 
         else if(status.equals("game")) {
-            timer1+=5;
-            if (gasLine<-1000){
-                role.loseOxygen();
-            }
-            if(role.getOxygen()<0){
-                role.loseHealth();
-                role.setPosition("damage");
-            }
-            if(role.getCollideMonster(monsters)){
-                role.setPosition("takeFakeDamage");
-            }
-            if(role.getCollideMonster(monsters)&& timer1>500){
-                role.takeDamge(50);
-                timer1 = 0;
-            }
+
+
             if(shopCounter==10){
                 shopCounter=0;
             }else{
@@ -280,6 +270,7 @@ public class MyGame extends ApplicationAdapter {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     // use translate(vx,vy), translateX(vx) or translateY(vy)
                     if(!role.getCollideUp(orls)) {
+                        role.setPosition("up");
                         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                             role.setPosition("left");
                         } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -330,9 +321,6 @@ public class MyGame extends ApplicationAdapter {
 
             }else {
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                    if(role.getBody().getY()-10<worldRect.getY()){
-                        role.setPosition("up");
-                    }
                     if(!role.getCollideUp(orls)) {
                         moveWorld(0,-constantY);
                         role.setPosition("fakeUp");
@@ -382,7 +370,6 @@ public class MyGame extends ApplicationAdapter {
 
                     }
                 } else if (Gdx.input.isKeyPressed(Input.Keys.S) && role.getCollide(orls)) {
-
                     if (orls.indexOf(role.getCollideOrl(orls)) != -1) {
                         orls.get(orls.indexOf(role.getCollideOrl(orls))).mining();
                         role.digDown();
@@ -414,6 +401,7 @@ public class MyGame extends ApplicationAdapter {
                 }
 
             }
+
             for(int i =0;i<orls.size();i++) {
                 if(orls.get(i).Appear) {
                     if(orls.get(i).getCurrent().getX()>-100&&orls.get(i).getCurrent().getX()<1300) {
@@ -433,10 +421,6 @@ public class MyGame extends ApplicationAdapter {
                 }
             }
             role.getCurrent().draw(batch);
-            font.draw(batch, "your money: "+role.getMoney(), 10, 900);
-            font.draw(batch, "your health: "+role.getHealth(), 10, 700);
-            font.draw(batch, "your Oxigen: "+role.getOxygen(), 10, 800);
-
         }
         batch.end();
     }
@@ -445,7 +429,7 @@ public class MyGame extends ApplicationAdapter {
         batch.dispose();
     }
     public void moveWorld(float x,float y){
-        gasLine -= y;
+
         for(int i = 0;i<orls.size();i++){
             orls.get(i).moveOrl(x,y);
 
