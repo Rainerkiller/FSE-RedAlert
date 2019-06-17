@@ -66,7 +66,7 @@ class loadingClass extends ApplicationAdapter {
     orl diamond;
     orl loadPics;
     Monster smallGoblin;
-    Bomb bomb;
+    Bomb bomb; 
     public loadingClass(){
 
     }
@@ -284,42 +284,17 @@ class loadingClass extends ApplicationAdapter {
     public Sprite getItemBar(){
         return itemBar;
     }
-    public boolean dealtDamage(Rectangle body){
-        if(bigBomb.getBoundingRectangle().overlaps(body)){
-            return true;
-        }
-        return false;
-    }
 
-
-    public void setBomb(float x, float y){
-        if(bigBombNum>0 && !bombPlnated) {
-            for (int i = 0; i < 6; i++) {
-                smallBombUse.get(i).setPosition(x, y);
-            }
-            bigBombNum--;
-            bombPlnated = true;
-        }
-    }
     public ArrayList<Sprite> getSmallBombUse(){
         return smallBombUse;
     }
-    public boolean exploerd(){
-        return timer>0;
-    }
-    public boolean getPlanted(){
-        return  bombPlnated;
-    }
-    public void booming(){
-        if(bombPlnated) {
-            if (timer > 0) {
-                timer -= 1;
-            }
 
-        }
+    public void usedSmallBomb(){
+        smallBombNum--;
+        smallBombNum--;
     }
     public void loadBomb(){
-        bomb = new Bomb(50,smallBomb,smallBombUse);
+        bomb = new Bomb(500,smallBomb,smallBombUse);
     }
     public Bomb getBomb(){
         return bomb;

@@ -13,14 +13,11 @@ class Monster {
     Sprite current;
     ArrayList <Sprite>motion;
     float currentX,currentY;
-    public Monster(){
-        health = 0;
-    }
     public Monster(Monster goblin){
         health = goblin.getHealth();
         damage = goblin.getDamage();
         current = new Sprite(goblin.getCurrent());
-        body = goblin.getBody();
+        body = current.getBoundingRectangle();
     }
     public Monster(int hp,int damage, Sprite current){
         health = hp;
@@ -52,6 +49,9 @@ class Monster {
         current.translateX(currentX);
         body = current.getBoundingRectangle();
 
+    }
+    public boolean getLive(){
+        return health>0;
     }
     public void takeDamage(int damage){
         health -= damage;

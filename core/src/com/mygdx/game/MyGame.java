@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class MyGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    String status = "menu";
+    String status = "game";
     ArrayList<orl> orls = new ArrayList<orl>();
     loadingClass A = new loadingClass();
     Toolbox C = new Toolbox();
@@ -36,6 +36,7 @@ public class MyGame extends ApplicationAdapter {
     float gasLine = 0;
     float timer1 = 0;
     Boolean guideS = false;
+    int bombTimer = 0;
     ArrayList<Bomb> bombs = new ArrayList<Bomb>();
 
 
@@ -242,7 +243,7 @@ public class MyGame extends ApplicationAdapter {
 
             if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){//quit to game
                 status = "game";
-                role.setPosition(541,477);//reset position
+                role.setPosition(541,600);//reset position
             }
             else{
 
@@ -390,10 +391,14 @@ public class MyGame extends ApplicationAdapter {
                 }
             }
 
-
-            if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            bombTimer +=5;
+            if(Gdx.input.isKeyPressed(Input.Keys.D)&&bombTimer>100&&bombs.size()<1){
                 if(A.getSmallBombNum()>0){
-                    bombs.add(A.getBomb());
+                    Bomb newBomb = new Bomb(A.getBomb());
+                    newBomb.setPosition(role.getBody().getX(),role.getBody().getY());
+                    A.usedSmallBomb();
+                    bombs.add(new Bomb(newBomb));
+                    bombTimer = 0;
                 }
             }
             if(role.getCollideMonster(monsters)&& timer1>500){
@@ -406,7 +411,10 @@ public class MyGame extends ApplicationAdapter {
                 shopCounter+=1;
             }
 
+            if(bombs.size()>0&&monsters.indexOf(bombs.get(0).damaged(monsters))!=-1){
+                monsters.get(monsters.indexOf(bombs.get(0).damaged(monsters))).takeDamage(bombs.get(0).getDamage());
 
+            }
 
             if(role.getBody().overlaps(worldRect)) {
                 if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -541,9 +549,15 @@ public class MyGame extends ApplicationAdapter {
                 role.getCollideOrl(orls).pickUp();
                 role.getOrl(role.getCollideOrl(orls));
             }
+            //get alive?
+            for (int i =0 ;i<monsters.size();i++) {
+                if (!monsters.get(i).getLive()) {
+                    monsters.remove(i);
+                    System.out.println("true");
+                }
+            }
 
             //start drawing
-
 
             A.getSkyPic().draw(batch);
             for(int i = 0;i<A.getBackList().size();i++){
@@ -575,7 +589,7 @@ public class MyGame extends ApplicationAdapter {
                 }else{
                     ok.getCurrent().draw(batch);
                 }
-                    ok.booming();
+                ok.booming();
             }
             role.getCurrent().draw(batch);
             font.draw(batch, "Your money: "+role.getMoney(), 10, 900);
