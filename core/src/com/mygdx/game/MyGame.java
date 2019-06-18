@@ -654,7 +654,7 @@ public class MyGame extends ApplicationAdapter {
 
         A.getSkyPic().translateX(x);
         A.getSkyPic().translateY(y);
-        
+
         for(int i = 0;i<A.getSmallBombUse().size();i++){
             A.getSmallBombUse().get(i).translateX(x);
             A.getSmallBombUse().get(i).translateY(y);

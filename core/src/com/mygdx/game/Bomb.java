@@ -45,6 +45,7 @@ class Bomb {
         }
         return null;
     }
+
     public void booming(){
         System.out.println(timer);
         if(timer>0){
