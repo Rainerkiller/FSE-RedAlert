@@ -22,7 +22,7 @@ class Bomb {
     public Bomb(int damage, Sprite current, ArrayList<Sprite> actions){
         this.damage = damage;
         this.current = current;
-        this.actions = actions;
+        this.actions = new ArrayList<Sprite>(actions);
     }
     public int getDamage(){
         return damage;
@@ -51,7 +51,6 @@ class Bomb {
             timer--;
         }else{
             rect = actions.get(5).getBoundingRectangle();
-
             explored = true;
         }
         if (timer < 10) {

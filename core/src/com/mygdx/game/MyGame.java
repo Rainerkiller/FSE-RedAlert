@@ -38,6 +38,7 @@ public class MyGame extends ApplicationAdapter {
     Boolean guideS = false;
     int bombTimer = 0;
     ArrayList<Bomb> bombs = new ArrayList<Bomb>();
+    ArrayList<Bomb> bigBombs = new ArrayList<Bomb>();
 
 
     public void createWorld(){//create dei
@@ -400,6 +401,14 @@ public class MyGame extends ApplicationAdapter {
                     bombs.add(new Bomb(newBomb));
                     bombTimer = 0;
                 }
+            }else if(Gdx.input.isKeyPressed(Input.Keys.F)&&bombTimer>100&&bigBombs.size()<1){
+                if(A.getBigBombNum()>0){
+                    Bomb newBombk = new Bomb(A.getBigBombs());
+                    newBombk.setPosition(role.getBody().getX(),role.getBody().getY());
+                    A.usedBigBomb();
+                    bigBombs.add(new Bomb(newBombk));
+                    bombTimer = 0;
+                }
             }
             if(role.getCollideMonster(monsters)&& timer1>500){
                 role.takeDamge(50);
@@ -591,6 +600,15 @@ public class MyGame extends ApplicationAdapter {
                 }
                 ok.booming();
             }
+            for(Bomb okl : bigBombs){
+                if(okl.explored){
+                    bigBombs.remove(okl);
+                    break;
+                }else{
+                    okl.getCurrent().draw(batch);
+                }
+                okl.booming();
+            }
             role.getCurrent().draw(batch);
             font.draw(batch, "Your money: "+role.getMoney(), 10, 900);
             font.draw(batch, "Your health: "+role.getHealth(), 10, 700);
@@ -636,12 +654,15 @@ public class MyGame extends ApplicationAdapter {
 
         A.getSkyPic().translateX(x);
         A.getSkyPic().translateY(y);
+        
         for(int i = 0;i<A.getSmallBombUse().size();i++){
             A.getSmallBombUse().get(i).translateX(x);
             A.getSmallBombUse().get(i).translateY(y);
         }
-        A.getBigBomb().translateX(x);
-        A.getBigBomb().translateY(y);
 
+        for(int i = 0;i<A.getSmallBombUse().size();i++){
+            A.getBigBombUse().get(i).translateX(x);
+            A.getBigBombUse().get(i).translateY(y);
+        }
     }
 }

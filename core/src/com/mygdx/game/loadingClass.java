@@ -63,10 +63,9 @@ class loadingClass extends ApplicationAdapter {
     //special items
     int timer = 100;
     orl Wall;
-    orl diamond;
-    orl loadPics;
     Monster smallGoblin;
-    Bomb bomb; 
+    Bomb bomb;
+    Bomb bigBombs;
     public loadingClass(){
 
     }
@@ -83,6 +82,7 @@ class loadingClass extends ApplicationAdapter {
         loadOtherObjects();
         loadBomb();
         loadWall();
+        loadBigBomb();
     }
     //load the wall
     public orl getWall(){
@@ -291,13 +291,26 @@ class loadingClass extends ApplicationAdapter {
 
     public void usedSmallBomb(){
         smallBombNum--;
-        smallBombNum--;
     }
     public void loadBomb(){
-        bomb = new Bomb(500,smallBomb,smallBombUse);
+        bomb = new Bomb(50,smallBomb,smallBombUse);
     }
     public Bomb getBomb(){
         return bomb;
     }
-
+    public Bomb getBigBombs(){
+        return bigBombs;
+    }
+    public void loadBigBomb(){
+        bigBombs = new Bomb(500,bigBomb,bigBombUse);
+    }
+    public int getBigBombNum(){
+        return bigBombNum;
+    }
+    public void usedBigBomb(){
+        bigBombNum--;
+    }
+    public ArrayList<Sprite> getBigBombUse(){
+        return bigBombUse;
+    }
 }
