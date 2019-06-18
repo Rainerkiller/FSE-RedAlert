@@ -45,6 +45,12 @@ class Bomb {
         }
         return null;
     }
+    public boolean damaged(Player role){
+        if(rect.overlaps(role.getBody())){
+            return true;
+        }
+        return false;
+    }
 
     public void booming(){
         System.out.println(timer);

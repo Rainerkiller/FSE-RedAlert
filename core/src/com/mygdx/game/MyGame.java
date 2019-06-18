@@ -421,6 +421,12 @@ public class MyGame extends ApplicationAdapter {
             if (role.getCollideMonster(monsters)) {
                 role.setPosition("takeFakeDamage");
             }
+            if(bombs.size()>0&&bombs.get(0).damaged(role)){
+                role.takeDamge(bombs.get(0).getDamage());
+            }
+            if(bigBombs.size()>0&&bigBombs.get(0).damaged(role)){
+                role.takeDamge(bigBombs.get(0).getDamage());
+            }
             //
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 C.wait(300);
